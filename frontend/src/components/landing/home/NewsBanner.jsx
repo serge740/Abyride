@@ -74,7 +74,7 @@ export default function NewsBanner() {
               </svg>
             </div>
             <div className="text-[12px] tracking-[0.08em] leading-[1.5] font-medium">
-              {t('news.scan')}<br /><span className="text-white/45 text-[10px]">iOS &amp; Android · v3.2.0</span>
+              {t('news.scan')}<br /><span className="text-white/45 text-[10px]">{t('news.version')}</span>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 ﻿import { useState, useRef, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 
@@ -62,14 +63,15 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const { t } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navLinks = [
-    { key: 'nav.services', suffix: ' ↓' },
-    { key: 'nav.medical' },
-    { key: 'nav.drivers' },
-    { key: 'nav.fleet' },
-    { key: 'nav.about' },
-    { key: 'nav.contact' },
+    { key: 'nav.services', to: '/services' },
+    { key: 'nav.medical', to: null },
+    { key: 'nav.drivers', to: null },
+    { key: 'nav.fleet', to: null },
+    { key: 'nav.about', to: '/about' },
+    { key: 'nav.contact', to: '/contact' },
   ];
 
   return (
@@ -116,11 +118,19 @@ export default function Navbar() {
           </a>
 
           <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map(l => (
-              <a key={l.key} className="text-[14px] text-ink font-medium whitespace-nowrap" href="#">
-                {t(l.key)}{l.suffix && <span className="text-[10px] ml-1 text-ink-soft">{l.suffix}</span>}
-              </a>
-            ))}
+            {navLinks.map(l => {
+              const isActive = l.to && location.pathname.startsWith(l.to);
+              const cls = `text-[14px] font-medium whitespace-nowrap transition-colors ${isActive ? 'text-accent' : 'text-ink'}`;
+              return l.to ? (
+                <Link key={l.key} to={l.to} className={cls}>
+                  {t(l.key)}
+                </Link>
+              ) : (
+                <a key={l.key} className={cls} href="#">
+                  {t(l.key)}
+                </a>
+              );
+            })}
           </nav>
 
           <div className="hidden lg:flex items-center gap-[10px]">
@@ -153,16 +163,19 @@ export default function Navbar() {
         {menuOpen && (
           <div className="lg:hidden border-t border-rule bg-surface">
             <nav className="px-5 sm:px-10 py-4 flex flex-col gap-1">
-              {navLinks.map(l => (
-                <a
-                  key={l.key}
-                  className="text-[15px] text-ink font-medium py-3 border-b border-rule-dim last:border-0"
-                  href="#"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {t(l.key)}
-                </a>
-              ))}
+              {navLinks.map(l => {
+                const isActive = l.to && location.pathname.startsWith(l.to);
+                const cls = `text-[15px] font-medium py-3 border-b border-rule-dim last:border-0 transition-colors ${isActive ? 'text-accent' : 'text-ink'}`;
+                return l.to ? (
+                  <Link key={l.key} to={l.to} className={cls} onClick={() => setMenuOpen(false)}>
+                    {t(l.key)}
+                  </Link>
+                ) : (
+                  <a key={l.key} className={cls} href="#" onClick={() => setMenuOpen(false)}>
+                    {t(l.key)}
+                  </a>
+                );
+              })}
               <div className="pt-4 flex flex-col gap-3">
                 <a className="text-[14px] text-ink font-medium" href="#">{t('nav.schedule')}</a>
                 <a className="text-[15px] text-surface bg-ink px-5 py-3 rounded-[6px] font-semibold inline-flex items-center justify-center gap-2" href="#">

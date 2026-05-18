@@ -1,6 +1,6 @@
-import en from './en';
-import fr from './fr';
-import rw from './rw';
+import en from '../locales/en.json';
+import fr from '../locales/fr.json';
+import rw from '../locales/rw.json';
 
 export const translations = { en, fr, rw };
 

@@ -43,39 +43,19 @@ export default function HeroSection() {
 
         {/* Right — photo + booking widget */}
         <div className="relative">
-          <div
-            className="relative w-full h-[280px] sm:h-[420px] lg:h-[720px] rounded-[8px] overflow-hidden"
-            style={{ background: 'linear-gradient(140deg, #0b1f3a, #1e3a8a 50%, #3b5bcc)' }}
-          >
-            <div className="absolute top-4 left-4 z-[2] text-[10px] tracking-[0.14em] text-white/75 bg-[rgba(11,31,58,0.55)] backdrop-blur-[6px] px-[10px] py-[6px] uppercase font-medium rounded-[3px]">
-              <span className="text-accent">●</span> HERO IMAGE · Detroit
+          <div className="relative w-full h-[280px] sm:h-[420px] lg:h-[720px] rounded-[8px] overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1559839734-2851eb3e7b7b?w=900&h=720&fit=crop&auto=format&q=80"
+              alt="Abyride driver assisting a passenger into an accessible van in Detroit"
+              className="w-full h-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+            {/* Duotone overlay to match brand palette */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0b1f3a]/60 via-[#1e3a8a]/30 to-transparent mix-blend-multiply" />
+            <div className="absolute top-4 left-4 z-[2] text-[10px] tracking-[0.14em] text-white/90 bg-[rgba(11,31,58,0.55)] backdrop-blur-[6px] px-[10px] py-[6px] uppercase font-medium rounded-[3px]">
+              <span className="text-accent">●</span> Detroit, Michigan
             </div>
-            <svg className="absolute inset-0" viewBox="0 0 600 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-              <defs>
-                <linearGradient id="duo" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#0b1f3a" />
-                  <stop offset="0.5" stopColor="#1e3a8a" />
-                  <stop offset="1" stopColor="#3b5bcc" />
-                </linearGradient>
-                <pattern id="halftone" width="6" height="6" patternUnits="userSpaceOnUse">
-                  <circle cx="3" cy="3" r="0.6" fill="rgba(255,255,255,0.18)" />
-                </pattern>
-              </defs>
-              <rect width="600" height="720" fill="url(#duo)" />
-              <rect width="600" height="720" fill="url(#halftone)" />
-              <g opacity="0.22" fill="#ffffff">
-                <path d="M60 480 L60 380 Q60 340 100 330 L200 310 Q260 290 320 310 L460 350 Q520 360 540 400 L540 480 Z" />
-                <rect x="100" y="350" width="80" height="60" rx="6" />
-                <rect x="200" y="340" width="100" height="70" rx="6" />
-                <rect x="320" y="350" width="120" height="60" rx="6" />
-                <circle cx="150" cy="500" r="40" fill="#0b1f3a" />
-                <circle cx="150" cy="500" r="22" fill="#ffffff" />
-                <circle cx="450" cy="500" r="40" fill="#0b1f3a" />
-                <circle cx="450" cy="500" r="22" fill="#ffffff" />
-              </g>
-              <line x1="0" y1="60" x2="600" y2="60" stroke="rgba(255,255,255,0.12)" />
-              <line x1="0" y1="660" x2="600" y2="660" stroke="rgba(255,255,255,0.12)" />
-            </svg>
           </div>
 
           {/* Booking widget */}
@@ -105,7 +85,7 @@ export default function HeroSection() {
             </div>
             <div className="flex flex-wrap gap-[6px] pt-[14px] border-t border-rule">
               <span className="text-[12px] px-3 py-[7px] border border-rule text-ink-soft font-medium rounded-[4px] cursor-pointer">{t('widget.standard')}</span>
-              <span className="text-[12px] px-3 py-[7px] bg-ink text-surface border border-ink font-medium rounded-[4px] cursor-pointer">Medical · $22</span>
+              <span className="text-[12px] px-3 py-[7px] bg-ink text-surface border border-ink font-medium rounded-[4px] cursor-pointer">{t('widget.medical_badge')}</span>
               <span className="text-[12px] px-3 py-[7px] border border-rule text-ink-soft font-medium rounded-[4px] cursor-pointer">{t('widget.accessible')}</span>
             </div>
             <button className="w-full mt-[14px] bg-accent text-white border-0 px-4 py-[14px] text-[14px] font-semibold flex justify-between items-center rounded-[8px]">

@@ -1,15 +1,48 @@
 ﻿import { useLanguage } from '../../../contexts/LanguageContext';
 
-const SERVICES = [
-  { n: 'S/01', kicker: '● Most requested', title: 'Non‑Emergency Medical', tag: 'On time, on rhythm, on the same schedule every week.', body: 'Dialysis, oncology, rehab. We coordinate directly with your case manager and bill MDHHS / Medicaid / Molina / Meridian — no paperwork on your end.', meta: '~3,200 trips / month' },
-  { n: 'S/02', title: 'Wheelchair‑Accessible Vans', tag: 'ADA‑compliant fleet across six cities.', body: 'Side & rear ramps, dual‑position lifts, four‑point securement. Every driver is trained in safe transfer technique and re‑certified annually.', meta: '68 vans · all certified' },
-  { n: 'S/03', title: 'Airport Pickup', tag: 'Flight‑tracked rides to DTW, GRR & FNT.', body: 'Meet‑and‑greet at baggage claim. Multilingual drivers on request. Flat fares quoted at booking — no surge, no surprises if your flight is late.', meta: '4 airports served' },
-  { n: 'S/04', kicker: '● Unique to Abyride', title: 'Live Language Translation', tag: 'A driver who speaks your language.', body: 'In‑car interpretation in Amharic, Arabic, Spanish, French, ASL and nine more. On‑demand video interpreter for any other language, billable to medical plans.', meta: '14 languages · live' },
-  { n: 'S/05', title: 'Everyday Rides', tag: 'Commutes, errands, the school run.', body: 'Flat‑rate pricing across Detroit, Ann Arbor, Lansing, Flint, Grand Rapids and Dearborn. No surge. Pay through the app or in cash with the driver.', meta: '6 cities live' },
-];
-
 export default function ServicesSection() {
   const { t } = useLanguage();
+
+  const SERVICES = [
+    {
+      n: t('services.s01.n'),
+      kicker: t('services.s01.kicker'),
+      title: t('services.s01.title'),
+      tag: t('services.s01.tag'),
+      body: t('services.s01.body'),
+      meta: t('services.s01.meta'),
+    },
+    {
+      n: t('services.s02.n'),
+      title: t('services.s02.title'),
+      tag: t('services.s02.tag'),
+      body: t('services.s02.body'),
+      meta: t('services.s02.meta'),
+    },
+    {
+      n: t('services.s03.n'),
+      title: t('services.s03.title'),
+      tag: t('services.s03.tag'),
+      body: t('services.s03.body'),
+      meta: t('services.s03.meta'),
+    },
+    {
+      n: t('services.s04.n'),
+      kicker: t('services.s04.kicker'),
+      title: t('services.s04.title'),
+      tag: t('services.s04.tag'),
+      body: t('services.s04.body'),
+      meta: t('services.s04.meta'),
+    },
+    {
+      n: t('services.s05.n'),
+      title: t('services.s05.title'),
+      tag: t('services.s05.tag'),
+      body: t('services.s05.body'),
+      meta: t('services.s05.meta'),
+    },
+  ];
+
   return (
     <section className="bg-surface text-ink pt-16 lg:pt-[120px] transition-colors duration-300">
       <div className="px-5 sm:px-10 lg:px-16">

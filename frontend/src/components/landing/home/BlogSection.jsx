@@ -1,13 +1,54 @@
 ﻿import { useLanguage } from '../../../contexts/LanguageContext';
 
-const POSTS = [
-  { grad: ['#0b1f3a', '#1a2b47'], id: 'bp-0', pp: 'bpp-0', tag: 'Home Care, Lifestyle', date: 'Jan 8, 2026', read: '5 min read', title: 'Why home care services are essential for modern living', excerpt: 'How everyday transportation shapes independence for older adults — and what families can do about it.' },
-  { grad: ['#2546b8', '#0f2768'], id: 'bp-1', pp: 'bpp-1', tag: 'Transportation', date: 'Jan 2, 2026', read: '7 min read', title: 'Behind the on‑time rate: how dispatch actually works at Abyride', excerpt: 'A look at the routing, the trained dispatchers, and the unglamorous spreadsheets behind 99.9%.' },
-  { grad: ['#0b1f3a', '#1a2b47'], id: 'bp-2', pp: 'bpp-2', tag: 'Translation', date: 'Dec 22, 2025', read: '4 min read', title: 'Breaking language barriers: the role of our translation service', excerpt: "Why a multilingual driver isn't a luxury for newcomers in Michigan — it's the difference between a ride and isolation." },
+// Real Unsplash photos — one per post topic
+const POST_IMAGES = [
+  {
+    id: 'bp-0',
+    src: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&h=480&fit=crop&auto=format&q=80',
+    alt: 'Caregiver helping elderly person into a vehicle',
+  },
+  {
+    id: 'bp-1',
+    src: 'https://images.unsplash.com/photo-1519494026892-476f9e6a0e9e?w=800&h=480&fit=crop&auto=format&q=80',
+    alt: 'Dispatch coordinator managing transport routes',
+  },
+  {
+    id: 'bp-2',
+    src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&h=480&fit=crop&auto=format&q=80',
+    alt: 'Two people communicating across a language barrier',
+  },
 ];
 
 export default function BlogSection() {
   const { t } = useLanguage();
+
+  const POSTS = [
+    {
+      ...POST_IMAGES[0],
+      tag: t('blog.p1.tag'),
+      date: t('blog.p1.date'),
+      read: t('blog.p1.read'),
+      title: t('blog.p1.title'),
+      excerpt: t('blog.p1.excerpt'),
+    },
+    {
+      ...POST_IMAGES[1],
+      tag: t('blog.p2.tag'),
+      date: t('blog.p2.date'),
+      read: t('blog.p2.read'),
+      title: t('blog.p2.title'),
+      excerpt: t('blog.p2.excerpt'),
+    },
+    {
+      ...POST_IMAGES[2],
+      tag: t('blog.p3.tag'),
+      date: t('blog.p3.date'),
+      read: t('blog.p3.read'),
+      title: t('blog.p3.title'),
+      excerpt: t('blog.p3.excerpt'),
+    },
+  ];
+
   return (
     <section className="bg-surface py-16 lg:py-[120px] text-ink transition-colors duration-300">
       <div className="px-5 sm:px-10 lg:px-16">
@@ -25,20 +66,17 @@ export default function BlogSection() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-4">
           {POSTS.map(p => (
-            <a key={p.id} className="flex flex-col" href="#">
+            <a key={p.id} className="flex flex-col group" href="#">
               <div className="relative overflow-hidden rounded-[8px]" style={{ aspectRatio: '5/3' }}>
-                <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" className="w-full h-full" aria-hidden="true">
-                  <defs>
-                    <linearGradient id={p.id} x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0" stopColor={p.grad[0]} /><stop offset="1" stopColor={p.grad[1]} />
-                    </linearGradient>
-                    <pattern id={p.pp} width="5" height="5" patternUnits="userSpaceOnUse">
-                      <circle cx="2.5" cy="2.5" r="0.5" fill="rgba(255,255,255,0.3)" />
-                    </pattern>
-                  </defs>
-                  <rect width="400" height="240" fill={`url(#${p.id})`} />
-                  <rect width="400" height="240" fill={`url(#${p.pp})`} />
-                </svg>
+                <img
+                  src={p.src}
+                  alt={p.alt}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  loading="lazy"
+                  decoding="async"
+                />
+                {/* Subtle dark overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f3a]/50 via-transparent to-transparent" />
                 <div className="absolute top-4 left-4 text-[10px] tracking-[0.14em] text-white bg-[rgba(11,31,58,0.6)] backdrop-blur-[6px] px-[9px] py-[5px] uppercase font-semibold rounded-[3px]">{p.tag}</div>
               </div>
               <div className="pt-5 lg:pt-6 px-1">

@@ -1,14 +1,15 @@
 ﻿import { useLanguage } from '../../../contexts/LanguageContext';
 
-const STATS = [
-  { i: '01', n: '5,000+', l: 'Happy clients', d: 'Riders and family bookers across MI.' },
-  { i: '02', n: '99.9%', l: 'On‑time rate', d: 'Measured at the pickup curb, YTD.' },
-  { i: '03', n: '24 / 7', l: 'Live dispatch', d: 'Real people answer in ≤90 seconds.' },
-  { i: '04', n: '10+', l: 'Years on the road', d: 'Family‑owned since 2014.' },
-];
-
 export default function SuccessSection() {
   const { t } = useLanguage();
+
+  const STATS = [
+    { i: t('success.s01.n'), n: t('success.s01.number'), l: t('success.s01.label'), d: t('success.s01.desc') },
+    { i: t('success.s02.n'), n: t('success.s02.number'), l: t('success.s02.label'), d: t('success.s02.desc') },
+    { i: t('success.s03.n'), n: t('success.s03.number'), l: t('success.s03.label'), d: t('success.s03.desc') },
+    { i: t('success.s04.n'), n: t('success.s04.number'), l: t('success.s04.label'), d: t('success.s04.desc') },
+  ];
+
   return (
     <section className="bg-surface text-ink py-16 lg:py-[120px] transition-colors duration-300">
       <div className="px-5 sm:px-10 lg:px-16">
@@ -24,7 +25,7 @@ export default function SuccessSection() {
 
         <div className="grid grid-cols-2 lg:grid-cols-4 border-t border-ink mb-12 lg:mb-20">
           {STATS.map((s, idx) => (
-            <div key={s.i} className={`px-4 sm:px-7 py-7 lg:py-10 border-b border-rule lg:border-b-0 ${idx % 2 === 0 ? 'border-r border-rule' : ''} ${idx < 2 ? 'lg:border-r lg:border-rule' : ''} ${idx === 1 || idx === 3 ? '' : ''}`}>
+            <div key={s.i} className={`px-4 sm:px-7 py-7 lg:py-10 border-b border-rule lg:border-b-0 ${idx % 2 === 0 ? 'border-r border-rule' : ''} ${idx < 2 ? 'lg:border-r lg:border-rule' : ''}`}>
               <div className="text-[11px] tracking-[0.18em] text-muted uppercase font-semibold">{s.i}</div>
               <div className="text-[36px] sm:text-[48px] lg:text-[64px] leading-none tracking-[-0.045em] font-bold mt-4 lg:mt-6">{s.n}</div>
               <div className="text-[14px] lg:text-[16px] font-semibold mt-3 lg:mt-4">{s.l}</div>
@@ -36,10 +37,10 @@ export default function SuccessSection() {
         <div className="max-w-[900px] mx-auto text-center px-4 sm:px-10">
           <div className="text-[80px] sm:text-[120px] leading-[0.5] text-accent italic font-extrabold mb-4">"</div>
           <blockquote className="text-[18px] sm:text-[22px] lg:text-[30px] leading-[1.3] font-medium italic mb-6 lg:mb-8 tracking-[-0.02em]">
-            Reliable, on time, and the drivers treat my mother like family. After eight years of dialysis rides, I don't think about transport anymore. That's the highest praise I can give.
+            {t('success.quote')}
           </blockquote>
-          <div className="text-[12px] tracking-[0.16em] uppercase font-bold">Ivana C.</div>
-          <div className="text-[13px] text-ink-soft mt-[6px]">Family caregiver · Dearborn · client since 2017</div>
+          <div className="text-[12px] tracking-[0.16em] uppercase font-bold">{t('success.quote_name')}</div>
+          <div className="text-[13px] text-ink-soft mt-[6px]">{t('success.quote_role')}</div>
         </div>
       </div>
     </section>
