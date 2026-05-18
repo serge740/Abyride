@@ -1,1 +1,133 @@
-@import 'tailwindcss'
+@import 'tailwindcss';
+
+/* ── All design tokens declared in @theme ─────────────────────────
+   @theme inline → Tailwind emits var(--color-X) so the values
+   respond to [data-theme="dark"] at runtime.
+   ─────────────────────────────────────────────────────────────── */
+@theme inline {
+  /* Surface / background */
+  --color-surface:    var(--c-bg);
+  --color-surface-2:  var(--c-bg-2);
+  --color-surface-3:  var(--c-bg-3);
+
+  /* Text */
+  --color-ink:        var(--c-ink);
+  --color-ink-soft:   var(--c-ink-soft);
+  --color-muted:      var(--c-muted);
+
+  /* Borders / dividers */
+  --color-rule:       var(--c-rule);
+  --color-rule-dim:   var(--c-rule-dim);
+
+  /* Brand blues */
+  --color-cobalt:     var(--c-cobalt);
+  --color-accent:     var(--c-cobalt-hi);
+
+  /* Dark-break section palette */
+  --color-navy:       var(--c-break-bg);
+  --color-navy-deep:  var(--c-break-bg-2);
+  --color-navy-blue:  var(--c-break-cobalt);
+  --color-on-dark:    var(--c-break-fg);
+  --color-blue-glow:  var(--c-break-accent);
+
+  /* Static card colours (never change with theme) */
+  --color-card-dark:    #1a2b47;
+  --color-card-cobalt:  #2546b8;
+  --color-phone-dark:   #0a1729;
+  --color-phone-screen: #f6f7f9;
+
+  /* Misc */
+  --color-amber:        #fbbf24;
+  --color-slate-cool:   #c9d2e6;
+  --color-green-play:   #34d399;
+  --color-red-play:     #f87171;
+
+  /* Font family */
+  --font-poppins: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ── CSS custom-property values (light mode) ──────────────────── */
+:root {
+  --c-bg:           #ffffff;
+  --c-bg-2:         #f6f7f9;
+  --c-bg-3:         #eef0f3;
+  --c-ink:          #0b1f3a;
+  --c-ink-soft:     #4b5b75;
+  --c-muted:        #8a8d96;
+  --c-rule:         #e6e7eb;
+  --c-rule-dim:     #f0f1f3;
+  --c-cobalt:       #1e3a8a;
+  --c-cobalt-hi:    #2546b8;
+  --c-break-bg:     #0b1f3a;
+  --c-break-bg-2:   #06152b;
+  --c-break-cobalt: #0f2768;
+  --c-break-fg:     #ffffff;
+  --c-break-mute:   rgba(255,255,255,0.65);
+  --c-break-mute-2: rgba(255,255,255,0.45);
+  --c-break-line:   rgba(255,255,255,0.12);
+  --c-break-accent: #7c9bff;
+}
+
+/* ── Dark mode overrides ──────────────────────────────────────── */
+[data-theme="dark"] {
+  --c-bg:           #0a0e14;
+  --c-bg-2:         #11161f;
+  --c-bg-3:         #161c27;
+  --c-ink:          #eef0f4;
+  --c-ink-soft:     #98a1b3;
+  --c-muted:        #6c7382;
+  --c-rule:         rgba(255,255,255,0.10);
+  --c-rule-dim:     rgba(255,255,255,0.06);
+  --c-cobalt:       #6b8eff;
+  --c-cobalt-hi:    #8aa6ff;
+  --c-break-bg:     #11161f;
+  --c-break-bg-2:   #06090f;
+  --c-break-cobalt: #1a2a4a;
+  --c-break-fg:     #eef0f4;
+  --c-break-mute:   rgba(238,240,244,0.65);
+  --c-break-mute-2: rgba(238,240,244,0.45);
+  --c-break-line:   rgba(255,255,255,0.08);
+  --c-break-accent: #8aa6ff;
+}
+
+/* ── Global base ──────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    margin: 0; padding: 0;
+    background-color: var(--c-bg);
+    color: var(--c-ink);
+    font-family: var(--font-poppins);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  a { text-decoration: none; cursor: pointer; }
+  ul, ol { list-style: none; margin: 0; padding: 0; }
+  h1, h2, h3, p, blockquote, figure { margin: 0; }
+
+  ::selection { background: var(--c-cobalt-hi); color: #fff; }
+}
+
+/* Battery fill — pseudo-element, impossible in Tailwind */
+.phone-battery::after {
+  content: '';
+  position: absolute;
+  top: 1.5px; left: 1.5px; bottom: 1.5px;
+  width: 78%;
+  background: #0b1f3a;
+  border-radius: 1px;
+}
+
+/* App-showcase bg grid — complex background-image not expressible in Tailwind */
+.app-bg-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
