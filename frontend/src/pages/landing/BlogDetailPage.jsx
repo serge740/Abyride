@@ -140,8 +140,8 @@ export default function BlogDetailPage() {
             </h2>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <a href="tel:+18338297339" className="inline-flex items-center gap-2 bg-accent text-white px-6 py-3 rounded-[8px] text-[14px] font-semibold">
-              Call (833) 829-7339
+            <a href="tel:+16166337026" className="inline-flex items-center gap-2 bg-accent text-white px-6 py-3 rounded-[8px] text-[14px] font-semibold">
+              Call +1 (616) 633‑7026
             </a>
             <Link to="/blog" className="inline-flex items-center gap-2 border border-white/25 text-white/85 px-6 py-3 rounded-[8px] text-[14px] font-semibold hover:bg-white/[0.06] transition-colors">
               More articles <ArrowRight size={14} />

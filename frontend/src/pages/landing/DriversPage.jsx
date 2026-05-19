@@ -85,7 +85,7 @@ export default function DriversPage() {
               className="bg-white text-[#0b1f3a] px-[22px] sm:px-[26px] py-3.5 lg:py-4 rounded-[8px] text-[14px] lg:text-[15px] font-semibold inline-flex items-center gap-2 whitespace-nowrap hover:bg-blue-glow transition-colors">
               {t('drv.cta_apply')}
             </a>
-            <a href="tel:+18338297339"
+            <a href="tel:+16166337026"
               className="border border-white/25 text-white px-[22px] sm:px-[26px] py-3.5 lg:py-4 rounded-[8px] text-[14px] lg:text-[15px] font-semibold inline-flex items-center gap-2 whitespace-nowrap hover:bg-white/[0.06] transition-colors">
               {t('drv.cta_call')}
             </a>
@@ -366,7 +366,7 @@ export default function DriversPage() {
                 className="bg-white text-[#0b1f3a] px-[22px] sm:px-[26px] py-3.5 lg:py-4 rounded-[8px] text-[14px] lg:text-[15px] font-semibold inline-flex items-center gap-2 whitespace-nowrap hover:bg-blue-glow transition-colors">
                 {t('drv.cta_apply')}
               </a>
-              <a href="tel:+18338297339"
+              <a href="tel:+16166337026"
                 className="border border-white/25 text-white px-[22px] sm:px-[26px] py-3.5 lg:py-4 rounded-[8px] text-[14px] lg:text-[15px] font-semibold inline-flex items-center gap-2 whitespace-nowrap hover:bg-white/[0.06] transition-colors">
                 {t('drv.cta_call')}
               </a>

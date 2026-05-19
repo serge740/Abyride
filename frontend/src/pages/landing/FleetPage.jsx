@@ -247,7 +247,7 @@ export default function FleetPage() {
               <a href="#" className="inline-flex items-center gap-2 bg-accent text-white px-6 py-3 rounded-[8px] text-[14px] font-semibold hover:bg-accent/90 transition-colors">
                 {t('fleet.cta_book')} <ArrowRight size={16} />
               </a>
-              <a href="tel:+18338297339" className="inline-flex items-center gap-2 border border-white/25 text-white/85 px-6 py-3 rounded-[8px] text-[14px] font-semibold hover:bg-white/[0.08] transition-colors">
+              <a href="tel:+16166337026" className="inline-flex items-center gap-2 border border-white/25 text-white/85 px-6 py-3 rounded-[8px] text-[14px] font-semibold hover:bg-white/[0.08] transition-colors">
                 {t('fleet.cta_call')}
               </a>
             </div>

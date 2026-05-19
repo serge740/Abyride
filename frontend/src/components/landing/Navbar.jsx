@@ -68,10 +68,10 @@ export default function Navbar() {
   const location = useLocation();
 
   const navLinks = [
+    { key: 'nav.about',    to: '/about'    },
     { key: 'nav.services', to: '/services' },
     { key: 'nav.fleet',    to: '/fleet'    },
     { key: 'nav.drivers',  to: '/drivers'  },
-    { key: 'nav.about',    to: '/about'    },
     { key: 'nav.team',     to: '/team'     },
     { key: 'nav.blog',     to: '/blog'     },
     { key: 'nav.contact',  to: '/contact'  },
@@ -83,14 +83,14 @@ export default function Navbar() {
       <div className="bg-navy-deep text-white/70 text-[11px]">
         <div className="px-5 sm:px-10 lg:px-16 py-[9px] flex justify-between items-center">
           <div className="hidden md:flex items-center gap-3">
-            <span><b className="text-white font-semibold">(833) 829-7339</b> · {t('util.dispatch')}</span>
+            <span><b className="text-white font-semibold">+1 (616) 633‑7026</b> · {t('util.dispatch')}</span>
             <span className="text-white/30">·</span>
             <span>{t('util.serving')}</span>
           </div>
           <div className="flex items-center gap-[10px] ml-auto">
-            <a className="hidden sm:inline text-white/85" href="#">{t('util.member_login')}</a>
+            <Link className="hidden sm:inline text-white/85" to="/login">{t('util.member_login')}</Link>
             <span className="hidden sm:inline text-white/30">·</span>
-            <a className="hidden sm:inline text-white/85" href="#">{t('util.driver_login')}</a>
+            <Link className="hidden sm:inline text-white/85" to="/driver-login">{t('util.driver_login')}</Link>
             <span className="hidden sm:inline text-white/30">·</span>
             <LangDropdown />
             <button

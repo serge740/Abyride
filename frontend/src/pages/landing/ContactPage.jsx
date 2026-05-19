@@ -1,6 +1,6 @@
 ﻿import { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { Smartphone, Mail, Car, Newspaper, Check, Plus } from 'lucide-react';
+import { Smartphone, Mail, Car, Newspaper, Check, Plus, Phone } from 'lucide-react';
 
 const UImg = ({ id, w = 800, h = 600, alt, className }) => (
   <img
@@ -87,10 +87,14 @@ export default function ContactPage() {
           </p>
           {/* Quick dispatch bar */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 mt-8 pt-8 border-t border-white/[0.12]">
-            <a href="tel:+18338297339"
-              className="text-[22px] sm:text-[28px] font-bold tracking-[-0.03em] hover:text-blue-glow transition-colors">
-              (833) 829‑7339
-            </a>
+            <div className="flex flex-col gap-1">
+              <a href="tel:+16166337026" className="text-[22px] sm:text-[26px] font-bold tracking-[-0.03em] hover:text-blue-glow transition-colors">
+                +1 (616) 633‑7026
+              </a>
+              <a href="tel:+2507983042" className="text-[16px] sm:text-[18px] font-semibold tracking-[-0.02em] text-white/70 hover:text-blue-glow transition-colors">
+                +250 798 304 2
+              </a>
+            </div>
             <div className="flex items-center gap-2 text-[12px] text-white/50 font-medium">
               <span className="w-2 h-2 rounded-full bg-green-play animate-pulse flex-shrink-0" />
               {t('contact.dispatch_note')}
@@ -168,12 +172,16 @@ export default function ContactPage() {
                 {t('contact.dispatch_body')}
               </p>
               <div className="border-t border-rule pt-7">
-                <div className="text-[11px] tracking-[0.16em] text-muted uppercase font-semibold mb-2">
+                <div className="text-[11px] tracking-[0.16em] text-muted uppercase font-semibold mb-3">
                   {t('contact.dispatch_label')}
                 </div>
-                <a href="tel:+18338297339"
-                  className="text-[36px] sm:text-[48px] lg:text-[56px] leading-none font-bold tracking-[-0.04em] text-ink hover:text-accent transition-colors block mb-3">
-                  (833) 829‑7339
+                <a href="tel:+16166337026"
+                  className="text-[36px] sm:text-[48px] lg:text-[52px] leading-none font-bold tracking-[-0.04em] text-ink hover:text-accent transition-colors block mb-1">
+                  +1 (616) 633‑7026
+                </a>
+                <a href="tel:+2507983042"
+                  className="text-[20px] sm:text-[24px] leading-none font-semibold tracking-[-0.025em] text-ink-soft hover:text-accent transition-colors block mb-4">
+                  +250 798 304 2
                 </a>
                 <div className="inline-flex items-center gap-2 text-[12px] text-muted font-medium">
                   <span className="w-2 h-2 rounded-full bg-green-play animate-pulse" />
@@ -250,6 +258,8 @@ export default function ContactPage() {
                   </div>
                 </form>
               )}
+
+       
             </div>
 
             {/* Right: info panel */}
@@ -258,13 +268,48 @@ export default function ContactPage() {
               <div className="bg-navy text-on-dark rounded-[12px] px-6 py-7 relative overflow-hidden">
                 <div className="app-bg-grid rounded-[12px]" />
                 <div className="relative z-[1]">
-                  <div className="text-[10px] tracking-[0.18em] text-white/45 uppercase font-semibold mb-3">
+                  <div className="flex items-center gap-2 text-[10px] tracking-[0.18em] text-white/45 uppercase font-semibold mb-4">
+                    <span className="w-2 h-2 rounded-full bg-green-play animate-pulse flex-shrink-0" />
                     {t('contact.dispatch_label')}
                   </div>
-                  <div className="text-[28px] sm:text-[32px] font-bold tracking-[-0.03em] mb-2">(833) 829‑7339</div>
-                  <div className="flex items-center gap-2 text-[12px] text-white/55 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-green-play animate-pulse flex-shrink-0" />
-                    {t('contact.dispatch_note')}
+
+                  {/* Phones */}
+                  <div className="flex flex-col gap-2 mb-5">
+                    {[
+                      { href: 'tel:+16166337026', label: '+1 (616) 633‑7026', note: 'US' },
+                      { href: 'tel:+2507983042',  label: '+250 798 304 2',    note: 'International' },
+                    ].map(p => (
+                      <a key={p.href} href={p.href} className="flex items-center gap-3 group">
+                        <div className="w-8 h-8 rounded-[7px] bg-white/[0.08] flex items-center justify-center flex-shrink-0 group-hover:bg-white/[0.15] transition-colors">
+                          <Phone size={14} className="text-white/70" />
+                        </div>
+                        <div>
+                          <div className="text-[16px] font-bold tracking-[-0.02em] group-hover:text-blue-glow transition-colors">{p.label}</div>
+                          <div className="text-[10px] text-white/40 font-medium tracking-[0.08em] uppercase">{p.note}</div>
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+
+                  {/* Divider */}
+                  <div className="border-t border-white/[0.1] mb-5" />
+
+                  {/* Emails */}
+                  <div className="flex flex-col gap-2">
+                    {[
+                      { href: 'mailto:booking@abyride.com',    label: 'booking@abyride.com',    note: 'Bookings' },
+                      { href: 'mailto:Abyridellc@gmail.com',   label: 'Abyridellc@gmail.com',   note: 'General' },
+                    ].map(m => (
+                      <a key={m.href} href={m.href} className="flex items-center gap-3 group">
+                        <div className="w-8 h-8 rounded-[7px] bg-white/[0.08] flex items-center justify-center flex-shrink-0 group-hover:bg-white/[0.15] transition-colors">
+                          <Mail size={14} className="text-white/70" />
+                        </div>
+                        <div>
+                          <div className="text-[14px] font-semibold tracking-[-0.01em] group-hover:text-blue-glow transition-colors">{m.label}</div>
+                          <div className="text-[10px] text-white/40 font-medium tracking-[0.08em] uppercase">{m.note}</div>
+                        </div>
+                      </a>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -282,18 +327,13 @@ export default function ContactPage() {
                 ))}
               </div>
               {/* Photo */}
-              <div className="rounded-[12px] overflow-hidden bg-surface-2" style={{ aspectRatio: '4/3' }}>
-                <UImg
-                  id="1573497019940-1c28c88b4f3e"
-                  w={640} h={480}
-                  alt="Two people communicating in different languages"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+             
             </div>
           </div>
         </div>
       </section>
+
+             
 
       {/* ══ OFFICES ═════════════════════════════════════════════ */}
       <section className="bg-surface py-16 lg:py-[100px]">
@@ -331,6 +371,20 @@ export default function ContactPage() {
         </div>
       </section>
 
+      {/* Map */}
+              <div className="mt-8 rounded-[12px] overflow-hidden border border-rule h-[300px] md:h-[400px] xl:h-[500px]" >
+                <iframe
+                  title="Abyride Location"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63799.41819286707!2d30.0445533!3d-1.9440727!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dca4258ed8e797%3A0xa0bf5cd8d6bd2f6b!2sKigali%2C%20Rwanda!5e0!3m2!1sen!2sus!4v1700000000000"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+
       {/* ══ FAQ ══════════════════════════════════════════════════ */}
       <section className="bg-surface-2 py-16 lg:py-[100px] transition-colors duration-300">
         <div className="px-5 sm:px-10 lg:px-16">
@@ -362,6 +416,8 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+
+      
 
     </div>
   );

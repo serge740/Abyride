@@ -20,7 +20,8 @@ export default function Footer() {
             <p className="text-[14px] text-white/65 leading-[1.55] max-w-[280px] mb-6 lg:mb-7">{t('footer.tagline')}</p>
             <div className="border-t border-white/[0.12] pt-5">
               <div className="text-[10px] tracking-[0.16em] text-white/45 uppercase font-semibold">{t('footer.dispatch')}</div>
-              <a className="text-[22px] lg:text-[26px] block mt-[6px] font-bold tracking-[-0.02em]" href="tel:+18338297339">(833) 829‑7339</a>
+              <a className="text-[20px] lg:text-[22px] block mt-[6px] font-bold tracking-[-0.02em]" href="tel:+16166337026">+1 (616) 633‑7026</a>
+              <a className="text-[14px] lg:text-[15px] block mt-[2px] font-semibold text-white/65 tracking-[-0.01em]" href="tel:+2507983042">+250 798 304 2</a>
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">

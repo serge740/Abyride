@@ -458,7 +458,7 @@
   "contact.form_email": "Adresse e-mail",
   "contact.form_email_ph": "vous@exemple.com",
   "contact.form_phone": "Numéro de téléphone (facultatif)",
-  "contact.form_phone_ph": "(555) 000-0000",
+  "contact.form_phone_ph": "+1 (616) 633-7026",
   "contact.form_subject": "Sujet",
   "contact.form_subject_ph": "De quoi s'agit-il ?",
   "contact.form_subject_booking": "Réserver un trajet",
@@ -469,7 +469,7 @@
   "contact.form_message": "Message",
   "contact.form_message_ph": "Dites-nous ce dont vous avez besoin...",
   "contact.form_submit": "Envoyer le message →",
-  "contact.form_note": "Nous répondons sous un jour ouvré. Pour les besoins urgents, appelez le (833) 829-7339.",
+  "contact.form_note": "Nous répondons sous un jour ouvré. Pour les besoins urgents, appelez le +1 (616) 633-7026.",
 
   "contact.offices_eyebrow": "IV · Nous trouver",
   "contact.offices_h2": "Six villes. Une seule équipe.",
@@ -490,7 +490,7 @@
   "contact.faq_eyebrow": "V · Questions fréquentes",
   "contact.faq_h2": "Réponses rapides.",
   "contact.faq1_q": "Comment réserver un transport médical ?",
-  "contact.faq1_a": "Appelez le (833) 829-7339 ou utilisez l'appli Abyride. Pour les trajets médicaux récurrents, nous pouvons mettre en place un planning fixe en un seul appel.",
+  "contact.faq1_a": "Appelez le +1 (616) 633-7026 ou utilisez l'appli Abyride. Pour les trajets médicaux récurrents, nous pouvons mettre en place un planning fixe en un seul appel.",
   "contact.faq2_q": "Abyride facture-t-il directement l'assurance ?",
   "contact.faq2_a": "Oui. Nous facturons MDHHS, Medicaid, Molina et Meridian directement. Vous n'avez jamais à soumettre de dossier ni à payer de votre poche pour les trajets couverts.",
   "contact.faq3_q": "Quelles langues le dispatch prend-il en charge ?",
@@ -647,7 +647,7 @@
   "fleet.van_feat3": "Facturation directe assureur",
   "fleet.cta_eyebrow": "Besoin d'aide pour choisir ?",
   "fleet.cta_h2": "Notre équipe de dispatch vous trouvera le bon véhicule.",
-  "fleet.cta_body": "Appelez le (833) 829-7339 à tout moment — et nous réserverons la classe adaptée à vos besoins.",
+  "fleet.cta_body": "Appelez le +1 (616) 633-7026 à tout moment — et nous réserverons la classe adaptée à vos besoins.",
   "fleet.cta_book": "Réserver un trajet →",
   "fleet.cta_call": "Appeler le dispatch"
 }

@@ -458,7 +458,7 @@
   "contact.form_email": "Email address",
   "contact.form_email_ph": "you@example.com",
   "contact.form_phone": "Phone number (optional)",
-  "contact.form_phone_ph": "(555) 000-0000",
+  "contact.form_phone_ph": "+1 (616) 633-7026",
   "contact.form_subject": "Subject",
   "contact.form_subject_ph": "What's this about?",
   "contact.form_subject_booking": "Booking a ride",
@@ -469,7 +469,7 @@
   "contact.form_message": "Message",
   "contact.form_message_ph": "Tell us what you need...",
   "contact.form_submit": "Send message →",
-  "contact.form_note": "We respond within one business day. For urgent needs, call (833) 829-7339.",
+  "contact.form_note": "We respond within one business day. For urgent needs, call +1 (616) 633-7026.",
 
   "contact.offices_eyebrow": "IV · Find us",
   "contact.offices_h2": "Six cities. One team.",
@@ -490,7 +490,7 @@
   "contact.faq_eyebrow": "V · Common questions",
   "contact.faq_h2": "Quick answers.",
   "contact.faq1_q": "How do I book a medical transport ride?",
-  "contact.faq1_a": "Call (833) 829-7339 or use the Abyride app. For recurring medical routes, we can set up a standing schedule with one call.",
+  "contact.faq1_a": "Call +1 (616) 633-7026 or use the Abyride app. For recurring medical routes, we can set up a standing schedule with one call.",
   "contact.faq2_q": "Does Abyride bill insurance directly?",
   "contact.faq2_a": "Yes. We bill MDHHS, Medicaid, Molina, and Meridian directly. You never need to submit a claim or pay out of pocket for covered rides.",
   "contact.faq3_q": "What languages does dispatch support?",
@@ -646,7 +646,7 @@
   "fleet.van_feat3": "Direct insurer billing",
   "fleet.cta_eyebrow": "Need help choosing?",
   "fleet.cta_h2": "Our dispatch team will match you with the right vehicle.",
-  "fleet.cta_body": "Call (833) 829-7339 any time — day or night — and we'll book the vehicle class that fits your needs and insurance.",
+  "fleet.cta_body": "Call +1 (616) 633-7026 any time — day or night — and we'll book the vehicle class that fits your needs and insurance.",
   "fleet.cta_book": "Book a ride",
   "fleet.cta_call": "Call dispatch"
 }
