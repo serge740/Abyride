@@ -1,4 +1,5 @@
 ﻿import { useLanguage } from '../../../contexts/LanguageContext';
+import { Plus, Plane, Home, Car, Calendar, Accessibility, Search } from 'lucide-react';
 
 export default function AppShowcase() {
   const { t } = useLanguage();
@@ -13,16 +14,16 @@ export default function AppShowcase() {
   ];
 
   const RECENT = [
-    { icon: '✚', title: t('app.phone_recent_1_title'), desc: t('app.phone_recent_1_desc'), badge: t('app.phone_recent_1_badge') },
-    { icon: '✈', title: t('app.phone_recent_2_title'), desc: t('app.phone_recent_2_desc') },
-    { icon: '⌂', title: t('app.phone_recent_3_title'), desc: t('app.phone_recent_3_desc') },
+    { Icon: Plus,        title: t('app.phone_recent_1_title'), desc: t('app.phone_recent_1_desc'), badge: t('app.phone_recent_1_badge') },
+    { Icon: Plane,       title: t('app.phone_recent_2_title'), desc: t('app.phone_recent_2_desc') },
+    { Icon: Home,        title: t('app.phone_recent_3_title'), desc: t('app.phone_recent_3_desc') },
   ];
 
   const QUICK_ACTIONS = [
-    { i: '🚗', l: t('app.quick_ride') },
-    { i: '✚', l: t('app.quick_medical') },
-    { i: '♿', l: t('app.quick_access') },
-    { i: '📅', l: t('app.quick_schedule') },
+    { Icon: Car,         l: t('app.quick_ride') },
+    { Icon: Plus,        l: t('app.quick_medical') },
+    { Icon: Accessibility, l: t('app.quick_access') },
+    { Icon: Calendar,    l: t('app.quick_schedule') },
   ];
 
   return (
@@ -105,14 +106,14 @@ export default function AppShowcase() {
                   <div className="text-[22px] leading-[1.15] mt-[6px] font-bold tracking-[-0.025em]">{t('app.phone_greeting')}</div>
                 </div>
                 <div className="flex items-center gap-[10px] px-[14px] py-[13px] bg-white border border-[#e6e7eb] rounded-[6px]">
-                  <span className="text-[16px] text-[#4b5b75]">⌕</span>
+                  <Search size={16} className="text-[#4b5b75]" />
                   <span className="text-[14px] text-[#8a8d96]">{t('app.phone_search_placeholder')}</span>
                 </div>
                 <div className="mt-[18px]">
                   <div className="text-[9px] tracking-[0.18em] text-[#8a8d96] pt-1 pb-[10px] font-semibold uppercase">{t('app.phone_recent_label')}</div>
                   {RECENT.map(item => (
                     <div key={item.title} className="flex items-center gap-3 py-3 border-t border-[#e6e7eb]">
-                      <div className="w-8 h-8 bg-[#eef0f3] text-[#2546b8] flex items-center justify-center text-[14px] rounded-[4px] flex-shrink-0">{item.icon}</div>
+                      <div className="w-8 h-8 bg-[#eef0f3] text-[#2546b8] flex items-center justify-center rounded-[4px] flex-shrink-0"><item.Icon size={15} /></div>
                       <div className="flex-1 min-w-0">
                         <div className="text-[13.5px] font-semibold truncate">{item.title}</div>
                         <div className="text-[11px] text-[#4b5b75] mt-0.5">{item.desc}</div>
@@ -124,7 +125,7 @@ export default function AppShowcase() {
                 <div className="grid grid-cols-4 gap-[6px] mt-auto pt-[14px] border-t border-[#e6e7eb]">
                   {QUICK_ACTIONS.map(a => (
                     <div key={a.l} className="bg-white border border-[#e6e7eb] pt-3 pb-[10px] text-center rounded-[4px]">
-                      <div className="text-[18px] mb-1">{a.i}</div>
+                      <div className="flex justify-center mb-1"><a.Icon size={16} /></div>
                       <div className="text-[10px] tracking-[0.08em] uppercase font-semibold">{a.l}</div>
                     </div>
                   ))}

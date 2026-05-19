@@ -1,19 +1,42 @@
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import LandingLayout from '../layouts/LandingLayout';
-import HomePage from '../pages/landing/HomePage';
-import ServicesPage from '../pages/landing/ServicesPage';
-import AboutPage from '../pages/landing/AboutPage';
-import ContactPage from '../pages/landing/ContactPage';
+import LoadingScreen from '../components/LoadingScreen';
+
+const HomePage     = lazy(() => import('../pages/landing/HomePage'));
+const ServicesPage = lazy(() => import('../pages/landing/ServicesPage'));
+const AboutPage    = lazy(() => import('../pages/landing/AboutPage'));
+const ContactPage  = lazy(() => import('../pages/landing/ContactPage'));
+const DriversPage  = lazy(() => import('../pages/landing/DriversPage'));
+const FleetPage    = lazy(() => import('../pages/landing/FleetPage'));
+const TeamPage     = lazy(() => import('../pages/landing/TeamPage'));
+const BlogsPage      = lazy(() => import('../pages/landing/BlogsPage'));
+const BlogDetailPage = lazy(() => import('../pages/landing/BlogDetailPage'));
+const BookNowPage    = lazy(() => import('../pages/landing/BookNowPage'));
+const SchedulePage   = lazy(() => import('../pages/landing/SchedulePage'));
+
+const wrap = (Component) => (
+  <Suspense fallback={<LoadingScreen />}>
+    <Component />
+  </Suspense>
+);
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <LandingLayout />,
     children: [
-      { index: true, element: <HomePage /> },
-      { path: 'services', element: <ServicesPage /> },
-      { path: 'about', element: <AboutPage /> },
-      { path: 'contact', element: <ContactPage /> },
+      { index: true,          element: wrap(HomePage)     },
+      { path: 'services',     element: wrap(ServicesPage) },
+      { path: 'about',        element: wrap(AboutPage)    },
+      { path: 'contact',      element: wrap(ContactPage)  },
+      { path: 'drivers',      element: wrap(DriversPage)  },
+      { path: 'fleet',        element: wrap(FleetPage)    },
+      { path: 'team',         element: wrap(TeamPage)     },
+      { path: 'blog',         element: wrap(BlogsPage)      },
+      { path: 'blog/:slug',   element: wrap(BlogDetailPage) },
+      { path: 'book',         element: wrap(BookNowPage)    },
+      { path: 'schedule',     element: wrap(SchedulePage)   },
     ],
   },
 ]);

@@ -131,3 +131,52 @@
     linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 80px 80px;
 }
+/* ── Blog article prose styles ─────────────────────────────────── */
+.prose-abyride p {
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--c-ink-soft);
+  margin-bottom: 1.4rem;
+}
+.prose-abyride h2 {
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--c-ink);
+  margin-top: 2.2rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--c-rule);
+}
+.prose-abyride h3 {
+  font-size: clamp(17px, 2.5vw, 20px);
+  font-weight: 700;
+  color: var(--c-ink);
+  margin-top: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+.prose-abyride ul, .prose-abyride ol {
+  margin-left: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+.prose-abyride li {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--c-ink-soft);
+  margin-bottom: 0.35rem;
+}
+.prose-abyride ul li { list-style-type: disc; }
+.prose-abyride ol li { list-style-type: decimal; }
+.prose-abyride a {
+  color: var(--c-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-abyride strong { color: var(--c-ink); font-weight: 600; }
+.prose-abyride blockquote {
+  border-left: 3px solid var(--c-accent);
+  padding-left: 1.1rem;
+  font-style: italic;
+  color: var(--c-ink-soft);
+  margin: 1.8rem 0;
+}

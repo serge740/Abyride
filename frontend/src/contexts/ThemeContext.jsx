@@ -4,8 +4,13 @@ const ThemeContext = createContext(null);
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
-    try { return localStorage.getItem('abyride-theme') || 'light'; }
-    catch { return 'light'; }
+    try {
+      const saved = localStorage.getItem('abyride-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+      return saved;
+    } catch {
+      return 'light';
+    }
   });
 
   useEffect(() => {

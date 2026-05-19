@@ -17,61 +17,72 @@ export default function WhyAbyride() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {/* Card 01 — dark */}
-          <div className="bg-card-dark text-white px-6 pt-6 pb-7 min-h-[360px] lg:min-h-[480px] flex flex-col rounded-[10px]">
-            <div className="text-[32px] leading-none italic font-bold text-white/55">01</div>
-            <div className="relative h-[140px] lg:h-[200px] mt-4 mb-auto">
-              <svg className="w-full h-full opacity-[0.32]" viewBox="0 0 240 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                <defs><pattern id="htn-01" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="0.55" fill="currentColor" /></pattern></defs>
-                <rect width="240" height="240" fill="url(#htn-01)" />
-                <circle cx="120" cy="130" r="60" fill="currentColor" opacity="0.6" />
-              </svg>
+          {/* Card 01 — dark / Secure */}
+          <div className="bg-card-dark text-white px-6 pt-6 pb-7 min-h-[360px] lg:min-h-[480px] flex flex-col rounded-[10px] overflow-hidden relative">
+            <div className="text-[32px] leading-none italic font-bold text-white/55 relative z-[1]">01</div>
+            <div className="relative h-[160px] lg:h-[210px] mt-4 mb-auto rounded-[8px] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=600&h=420&fit=crop&auto=format&q=80"
+                alt="Trusted professional driver"
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={e => { e.currentTarget.style.display = 'none'; }}
+              />
+              <div className="absolute inset-0 bg-[#0b1f3a]/55 mix-blend-multiply" />
             </div>
             <h3 className="text-[22px] lg:text-[26px] leading-[1.1] tracking-[-0.025em] font-bold mt-5 lg:mt-6 mb-[10px]">{t('why.01_title')}</h3>
             <p className="text-[13.5px] leading-[1.5] opacity-[0.85] mb-4">{t('why.01_body')}</p>
             <a className="text-[12px] font-semibold tracking-[0.04em] border-b border-white/60 pb-0.5 self-start" href="#">{t('why.read_more')}</a>
           </div>
-          {/* Card 02 — cobalt */}
-          <div className="bg-card-cobalt text-white px-6 pt-6 pb-7 min-h-[360px] lg:min-h-[480px] flex flex-col rounded-[10px]">
-            <div className="text-[32px] leading-none italic font-bold text-white/55">02</div>
-            <div className="relative h-[140px] lg:h-[200px] mt-4 mb-auto">
-              <svg className="w-full h-full opacity-[0.32]" viewBox="0 0 240 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                <defs><pattern id="htn-02" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="0.55" fill="currentColor" /></pattern></defs>
-                <rect width="240" height="240" fill="url(#htn-02)" />
-                <path d="M40 200 Q120 60 200 200" stroke="currentColor" strokeWidth="3" fill="none" opacity="0.9" />
-              </svg>
+
+          {/* Card 02 — cobalt / Multilingual */}
+          <div className="bg-card-cobalt text-white px-6 pt-6 pb-7 min-h-[360px] lg:min-h-[480px] flex flex-col rounded-[10px] overflow-hidden relative">
+            <div className="text-[32px] leading-none italic font-bold text-white/55 relative z-[1]">02</div>
+            <div className="relative h-[160px] lg:h-[210px] mt-4 mb-auto rounded-[8px] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=420&fit=crop&auto=format&q=80"
+                alt="Multilingual communication"
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={e => { e.currentTarget.style.display = 'none'; }}
+              />
+              <div className="absolute inset-0 bg-[#1e3a8a]/50 mix-blend-multiply" />
             </div>
             <h3 className="text-[22px] lg:text-[26px] leading-[1.1] tracking-[-0.025em] font-bold mt-5 lg:mt-6 mb-[10px]">{t('why.02_title')}</h3>
             <p className="text-[13.5px] leading-[1.5] opacity-[0.85] mb-4">{t('why.02_body')}</p>
             <a className="text-[12px] font-semibold tracking-[0.04em] border-b border-white/60 pb-0.5 self-start" href="#">{t('why.read_more')}</a>
           </div>
-          {/* Card 03 — paper */}
-          <div className="bg-surface-2 text-ink px-6 pt-6 pb-7 min-h-[360px] lg:min-h-[480px] flex flex-col rounded-[10px]">
-            <div className="text-[32px] leading-none italic font-bold text-accent">03</div>
-            <div className="relative h-[140px] lg:h-[200px] mt-4 mb-auto">
-              <svg className="w-full h-full opacity-[0.32]" viewBox="0 0 240 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                <defs><pattern id="htn-03" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="0.55" fill="currentColor" /></pattern></defs>
-                <rect width="240" height="240" fill="url(#htn-03)" />
-                <path d="M120 50 V200 M70 125 H170" stroke="currentColor" strokeWidth="6" opacity="0.9" />
-              </svg>
+
+          {/* Card 03 — paper / Health */}
+          <div className="bg-surface-2 text-ink px-6 pt-6 pb-7 min-h-[360px] lg:min-h-[480px] flex flex-col rounded-[10px] overflow-hidden relative">
+            <div className="text-[32px] leading-none italic font-bold text-accent relative z-[1]">03</div>
+            <div className="relative h-[160px] lg:h-[210px] mt-4 mb-auto rounded-[8px] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=420&fit=crop&auto=format&q=80"
+                alt="Medical transport service"
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={e => { e.currentTarget.style.display = 'none'; }}
+              />
+              <div className="absolute inset-0 bg-white/20 mix-blend-overlay" />
             </div>
             <h3 className="text-[22px] lg:text-[26px] leading-[1.1] tracking-[-0.025em] font-bold mt-5 lg:mt-6 mb-[10px]">{t('why.03_title')}</h3>
             <p className="text-[13.5px] leading-[1.5] opacity-[0.85] mb-4">{t('why.03_body')}</p>
             <a className="text-[12px] font-semibold tracking-[0.04em] border-b border-ink pb-0.5 self-start" href="#">{t('why.read_more')}</a>
           </div>
-          {/* Card 04 — ink */}
-          <div className="bg-ink text-surface px-6 pt-6 pb-7 min-h-[360px] lg:min-h-[480px] flex flex-col rounded-[10px]">
-            <div className="text-[32px] leading-none italic font-bold text-white/55">04</div>
-            <div className="relative h-[140px] lg:h-[200px] mt-4 mb-auto">
-              <svg className="w-full h-full opacity-[0.32]" viewBox="0 0 240 240" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                <defs><pattern id="htn-04" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r="0.55" fill="currentColor" /></pattern></defs>
-                <rect width="240" height="240" fill="url(#htn-04)" />
-                <g opacity="0.7" fill="currentColor">
-                  <circle cx="90" cy="100" r="22" />
-                  <circle cx="150" cy="100" r="22" />
-                  <path d="M50 200 Q90 150 120 150 Q150 150 190 200 Z" />
-                </g>
-              </svg>
+
+          {/* Card 04 — ink / Family */}
+          <div className="bg-ink text-surface px-6 pt-6 pb-7 min-h-[360px] lg:min-h-[480px] flex flex-col rounded-[10px] overflow-hidden relative">
+            <div className="text-[32px] leading-none italic font-bold text-white/55 relative z-[1]">04</div>
+            <div className="relative h-[160px] lg:h-[210px] mt-4 mb-auto rounded-[8px] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1531983955800-cbec30f15bff?w=600&h=420&fit=crop&auto=format&q=80"
+                alt="Family using Abyride together"
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={e => { e.currentTarget.style.display = 'none'; }}
+              />
+              <div className="absolute inset-0 bg-[#0b1f3a]/50 mix-blend-multiply" />
             </div>
             <h3 className="text-[22px] lg:text-[26px] leading-[1.1] tracking-[-0.025em] font-bold mt-5 lg:mt-6 mb-[10px]">{t('why.04_title')}</h3>
             <p className="text-[13.5px] leading-[1.5] opacity-[0.85] mb-4">{t('why.04_body')}</p>

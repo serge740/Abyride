@@ -1,5 +1,6 @@
 import { useSearchParams, Link } from 'react-router-dom';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { ArrowRight, Circle } from 'lucide-react';
 
 /* ── Real Unsplash images per service ────────────────────────── */
 // Photo IDs sourced from Unsplash — free to use, no API key needed for <img> src
@@ -139,7 +140,7 @@ export default function ServicesPage() {
                   href="#"
                   className="w-full bg-accent text-white px-4 py-3.5 rounded-[8px] text-[13px] font-semibold flex items-center justify-between"
                 >
-                  {t('svc.cta_book')} <span>→</span>
+                  {t('svc.cta_book')} <ArrowRight size={14} />
                 </a>
                 <a href="#" className="block mt-3 text-[12px] text-ink-soft text-center hover:text-ink transition-colors">
                   {t('svc.cta_learn')}
@@ -180,7 +181,7 @@ function ServiceDetail({ id, t }) {
         {/* Eyebrow overlay */}
         <div className="absolute top-5 left-5 z-[2] text-[10px] tracking-[0.14em] text-white/80
           bg-[rgba(11,31,58,0.55)] backdrop-blur-[6px] px-[10px] py-[6px] uppercase font-semibold rounded-[3px]">
-          <span className="text-blue-glow mr-1">●</span>
+          <Circle size={5} fill="currentColor" className="text-blue-glow mr-1 inline-block" />
           {t(`svc.${id}.hero_eyebrow`)}
         </div>
         {/* Service number */}
@@ -260,7 +261,7 @@ function ServiceDetail({ id, t }) {
           href="#"
           className="bg-ink text-surface px-[22px] sm:px-[26px] py-3.5 lg:py-4 rounded-[8px] text-[14px] lg:text-[15px] font-semibold inline-flex items-center gap-2"
         >
-          {t(`svc.${id}.cta`)} <span>→</span>
+          {t(`svc.${id}.cta`)} <ArrowRight size={14} />
         </a>
         <a href="#" className="text-[14px] text-ink-soft hover:text-ink transition-colors font-medium border-b border-rule pb-0.5">
           {t('svc.cta_learn')}
@@ -273,7 +274,7 @@ function ServiceDetail({ id, t }) {
           href="#"
           className="w-full bg-accent text-white px-4 py-3.5 rounded-[8px] text-[14px] font-semibold flex items-center justify-between"
         >
-          {t('svc.cta_book')} <span>→</span>
+          {t('svc.cta_book')} <ArrowRight size={14} />
         </a>
       </div>
     </article>

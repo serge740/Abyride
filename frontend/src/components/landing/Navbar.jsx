@@ -2,6 +2,8 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
+import { ArrowRight } from 'lucide-react';
+import logo from '../../assets/images/abyride_logo.png';
 
 function LangDropdown() {
   const { lang, setLanguage, LANGUAGES } = useLanguage();
@@ -67,11 +69,12 @@ export default function Navbar() {
 
   const navLinks = [
     { key: 'nav.services', to: '/services' },
-    { key: 'nav.medical', to: null },
-    { key: 'nav.drivers', to: null },
-    { key: 'nav.fleet', to: null },
-    { key: 'nav.about', to: '/about' },
-    { key: 'nav.contact', to: '/contact' },
+    { key: 'nav.fleet',    to: '/fleet'    },
+    { key: 'nav.drivers',  to: '/drivers'  },
+    { key: 'nav.about',    to: '/about'    },
+    { key: 'nav.team',     to: '/team'     },
+    { key: 'nav.blog',     to: '/blog'     },
+    { key: 'nav.contact',  to: '/contact'  },
   ];
 
   return (
@@ -105,17 +108,9 @@ export default function Navbar() {
       {/* NAV */}
       <header className="bg-surface border-b border-rule sticky top-0 z-50 transition-colors duration-300">
         <div className="px-5 sm:px-10 lg:px-16 py-4 lg:py-[18px] flex items-center justify-between gap-6">
-          <a className="flex items-center gap-[10px] flex-shrink-0" href="#">
-            <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
-              <rect width="34" height="34" rx="6" fill="var(--c-ink)" />
-              <path d="M9 24 L17 8 L25 24" stroke="var(--c-bg)" strokeWidth="2.4" fill="none" strokeLinejoin="miter" />
-              <path d="M13 18 H21" stroke="var(--c-bg)" strokeWidth="2.4" />
-              <circle cx="17" cy="27" r="1.6" fill="var(--c-cobalt-hi)" />
-            </svg>
-            <span className="text-[20px] lg:text-[22px] leading-none tracking-[-0.02em] font-bold italic text-ink">
-              Abyride<span className="text-accent">.</span>
-            </span>
-          </a>
+          <Link className="flex items-center flex-shrink-0" to="/">
+            <img src={logo} alt="Abyride" className="h-14 lg:h-16 w-auto object-contain transition-transform duration-200 hover:scale-105" />
+          </Link>
 
           <nav className="hidden lg:flex items-center gap-8">
             {navLinks.map(l => {
@@ -134,16 +129,16 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-[10px]">
-            <a className="text-[14px] text-ink px-4 py-[11px] font-medium whitespace-nowrap" href="#">{t('nav.schedule')}</a>
-            <a className="text-[14px] text-surface bg-ink px-[18px] py-3 rounded-[6px] font-semibold inline-flex items-center gap-[6px] whitespace-nowrap" href="#">
-              {t('nav.book_now')} <span>→</span>
-            </a>
+            <Link className="text-[14px] text-ink px-4 py-[11px] font-medium whitespace-nowrap" to="/schedule">{t('nav.schedule')}</Link>
+            <Link className="text-[14px] text-surface bg-ink px-[18px] py-3 rounded-[6px] font-semibold inline-flex items-center gap-[6px] whitespace-nowrap" to="/book">
+              {t('nav.book_now')} <ArrowRight size={14} />
+            </Link>
           </div>
 
           <div className="flex items-center gap-3 lg:hidden">
-            <a className="text-[13px] text-surface bg-ink px-4 py-2.5 rounded-[6px] font-semibold hidden sm:inline-flex items-center gap-1 whitespace-nowrap" href="#">
-              {t('nav.book_now')} <span>→</span>
-            </a>
+            <Link className="text-[13px] text-surface bg-ink px-4 py-2.5 rounded-[6px] font-semibold hidden sm:inline-flex items-center gap-1 whitespace-nowrap" to="/book">
+              {t('nav.book_now')} <ArrowRight size={14} />
+            </Link>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
@@ -177,10 +172,10 @@ export default function Navbar() {
                 );
               })}
               <div className="pt-4 flex flex-col gap-3">
-                <a className="text-[14px] text-ink font-medium" href="#">{t('nav.schedule')}</a>
-                <a className="text-[15px] text-surface bg-ink px-5 py-3 rounded-[6px] font-semibold inline-flex items-center justify-center gap-2" href="#">
-                  {t('nav.book_now')} <span>→</span>
-                </a>
+                <Link className="text-[14px] text-ink font-medium" to="/schedule" onClick={() => setMenuOpen(false)}>{t('nav.schedule')}</Link>
+                <Link className="text-[15px] text-surface bg-ink px-5 py-3 rounded-[6px] font-semibold inline-flex items-center justify-center gap-2" to="/book" onClick={() => setMenuOpen(false)}>
+                  {t('nav.book_now')} <ArrowRight size={14} />
+                </Link>
               </div>
             </nav>
           </div>

@@ -114,37 +114,22 @@ export default function AboutPage() {
       {/* ══════════════════════════════════════════════════════════
           HERO — dark navy, full-width
       ══════════════════════════════════════════════════════════ */}
-      <section className="bg-navy text-on-dark relative overflow-hidden">
+      <div className="bg-navy text-on-dark py-14 lg:py-20 relative overflow-hidden">
         <div className="app-bg-grid" />
-        <div className="px-5 sm:px-10 lg:px-16 pt-16 lg:pt-24 pb-0 relative z-[1]">
-          <div className="max-w-[900px]">
-            <Eyebrow roman="·" text={t('about.page_eyebrow')} light />
-            <h1 className="text-[44px] sm:text-[64px] lg:text-[88px] leading-[0.97] tracking-[-0.045em] font-bold mt-6 mb-6">
-              {t('about.page_title_1')}<br />
-              <em className="italic text-blue-glow">{t('about.page_title_2')}</em>
-            </h1>
-            <p className="text-[16px] lg:text-[19px] text-white/65 max-w-[560px] leading-[1.65] mb-14 lg:mb-20">
-              {t('about.page_sub')}
-            </p>
+        <div className="px-5 sm:px-10 lg:px-16 relative z-[1]">
+          <div className="inline-flex items-center gap-[10px] text-[11px] tracking-[0.18em] uppercase text-white/55 font-semibold mb-5">
+            <span className="text-blue-glow text-[18px] italic font-bold tracking-normal">·</span>
+            {t('about.page_eyebrow')}
           </div>
-
-          {/* Hero photo strip */}
-          <div className="w-full h-[180px] sm:h-[220px] lg:h-[260px] relative overflow-hidden rounded-t-[12px]">
-            <img
-              src="https://images.unsplash.com/photo-1519494026892-476f9e6a0e9e?w=1400&h=260&fit=crop&auto=format&q=80"
-              alt="Detroit Michigan cityscape — Abyride home city"
-              className="w-full h-full object-cover"
-              loading="eager"
-              decoding="async"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0b1f3a]/70 via-[#0b1f3a]/20 to-transparent" />
-            {/* Est. badge */}
-            <div className="absolute bottom-5 left-5 text-[10px] tracking-[0.18em] text-white/70 bg-[rgba(11,31,58,0.55)] backdrop-blur-[6px] px-[10px] py-[6px] uppercase font-semibold rounded-[3px]">
-              EST. 2014 · Detroit, Michigan
-            </div>
-          </div>
+          <h1 className="text-[36px] sm:text-[52px] lg:text-[72px] leading-none tracking-[-0.04em] font-bold mb-4">
+            {t('about.page_title_1')}{' '}
+            <em className="italic text-blue-glow">{t('about.page_title_2')}</em>
+          </h1>
+          <p className="text-[15px] lg:text-[17px] text-white/65 max-w-[540px] leading-[1.6]">
+            {t('about.page_sub')}
+          </p>
         </div>
-      </section>
+      </div>
 
       {/* ══════════════════════════════════════════════════════════
           ORIGIN STORY
