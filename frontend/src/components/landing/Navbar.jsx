@@ -88,10 +88,6 @@ export default function Navbar() {
             <span>{t('util.serving')}</span>
           </div>
           <div className="flex items-center gap-[10px] ml-auto">
-            <Link className="hidden sm:inline text-white/85" to="/login">{t('util.member_login')}</Link>
-            <span className="hidden sm:inline text-white/30">·</span>
-            <Link className="hidden sm:inline text-white/85" to="/driver-login">{t('util.driver_login')}</Link>
-            <span className="hidden sm:inline text-white/30">·</span>
             <LangDropdown />
             <button
               onClick={toggleTheme}

@@ -1,0 +1,20 @@
+/* Scoped styles for the admin dashboard redesign — only imported by AdminLayout. */
+
+.d-row { transition: background 0.1s; }
+.d-row:hover { background: #f6f7f9 !important; }
+
+.d-input:focus {
+  outline: none;
+  border-color: #2546b8 !important;
+  box-shadow: 0 0 0 3px rgba(37, 70, 184, 0.09);
+}
+
+.nav-item:hover:not(.nav-active) {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #fff !important;
+}
+
+.qa-btn:hover { background: rgba(255, 255, 255, 0.12) !important; }
+
+@keyframes admSpin  { to { transform: rotate(360deg); } }
+@keyframes admPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }

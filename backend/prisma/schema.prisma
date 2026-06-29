@@ -1,0 +1,139 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── ENUMS ──────────────────────────────────────────
+
+enum DriverStatus {
+  ACTIVE
+  SUSPENDED
+  PENDING
+  INACTIVE
+}
+
+enum MemberStatus {
+  ACTIVE
+  SUSPENDED
+  INACTIVE
+}
+
+enum TripStatus {
+  REQUESTED
+  ACCEPTED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum FleetCategory {
+  STANDARD
+  PREMIUM
+  GROUP
+  ACCESSIBLE
+}
+
+enum FleetStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+// ─── MODELS ─────────────────────────────────────────
+
+model Admin {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  names     String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Driver {
+  id                String       @id @default(uuid())
+  email             String       @unique
+  names             String
+  phone             String?
+  password          String
+  status            DriverStatus @default(PENDING)
+  profileImg        String?
+  licenseImage      String?
+  vehicleImage      String?
+  licenseDocument   String?
+  insuranceDocument String?
+  fleetId           String?
+  fleet             Fleet?       @relation(fields: [fleetId], references: [id])
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  trips             Trip[]
+}
+
+model Fleet {
+  id                String        @id @default(uuid())
+  slug              String        @unique
+  name              String
+  description       String?
+  category          FleetCategory
+  passengerCapacity Int
+  perKmRate         Float
+  accessible        Boolean       @default(false)
+  status            FleetStatus   @default(ACTIVE)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  drivers           Driver[]
+  trips             Trip[]
+}
+
+model Member {
+  id         String       @id @default(uuid())
+  email      String       @unique
+  names      String
+  phone      String?
+  password   String
+  status     MemberStatus @default(ACTIVE)
+  profileImg String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  trips      Trip[]
+}
+
+model Trip {
+  id                     String        @id @default(uuid())
+  memberId               String
+  driverId               String?
+  fleetId                String
+  pickupAddress          String
+  dropoffAddress         String
+  pickupLat              Float
+  pickupLng              Float
+  dropoffLat             Float
+  dropoffLng             Float
+  distanceKm             Float
+  durationMin            Float?
+  scheduledAt            DateTime?
+  status                 TripStatus    @default(REQUESTED)
+  fare                   Float?
+  paymentStatus          PaymentStatus @default(PENDING)
+  stripePaymentIntentId  String?       @unique
+  paidAt                 DateTime?
+  cancelledAt            DateTime?
+  cancelReason           String?
+  reminderSentAt         DateTime?
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+
+  member                 Member        @relation(fields: [memberId], references: [id])
+  driver                 Driver?       @relation(fields: [driverId], references: [id])
+  fleet                  Fleet         @relation(fields: [fleetId], references: [id])
+}
