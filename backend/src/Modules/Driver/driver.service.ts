@@ -19,6 +19,7 @@ export class DriverService {
     email: string;
     phone?: string;
     status?: DriverStatus;
+    fleetId?: string;
     profileImg?: string;
     licenseImage?: string;
     vehicleImage?: string;
@@ -37,6 +38,7 @@ export class DriverService {
         email: data.email,
         phone: data.phone ?? null,
         status: data.status ?? DriverStatus.PENDING,
+        fleetId: data.fleetId ?? null,
         password: hashedPassword,
         profileImg: data.profileImg ?? null,
         licenseImage: data.licenseImage ?? null,
@@ -80,6 +82,8 @@ export class DriverService {
         vehicleImage: true,
         licenseDocument: true,
         insuranceDocument: true,
+        fleetId: true,
+        fleet: { select: { id: true, name: true, slug: true } },
         createdAt: true,
         updatedAt: true,
       },
@@ -101,6 +105,8 @@ export class DriverService {
         vehicleImage: true,
         licenseDocument: true,
         insuranceDocument: true,
+        fleetId: true,
+        fleet: { select: { id: true, name: true, slug: true } },
         createdAt: true,
         updatedAt: true,
       },
@@ -115,6 +121,7 @@ export class DriverService {
       names: string;
       phone: string;
       status: DriverStatus;
+      fleetId: string;
       profileImg: string;
       licenseImage: string;
       vehicleImage: string;
@@ -137,6 +144,7 @@ export class DriverService {
         ...(data.names && { names: data.names }),
         ...(data.phone && { phone: data.phone }),
         ...(data.status && { status: data.status }),
+        ...(data.fleetId !== undefined && { fleetId: data.fleetId || null }),
         ...(data.profileImg && { profileImg: data.profileImg }),
         ...(data.licenseImage && { licenseImage: data.licenseImage }),
         ...(data.vehicleImage && { vehicleImage: data.vehicleImage }),

@@ -21,7 +21,7 @@ export class AppSocketGateway
   @WebSocketServer()
   server: Server;
 
-  adminSockets = new Map<string, Set<string>>();
+  adminSockets  = new Map<string, Set<string>>();
   driverSockets = new Map<string, Set<string>>();
   memberSockets = new Map<string, Set<string>>();
 
@@ -35,19 +35,13 @@ export class AppSocketGateway
 
   private removeSocketFromMaps(socketId: string) {
     this.adminSockets.forEach((set, adminId) => {
-      if (set.delete(socketId) && set.size === 0) {
-        this.adminSockets.delete(adminId);
-      }
+      if (set.delete(socketId) && set.size === 0) this.adminSockets.delete(adminId);
     });
     this.driverSockets.forEach((set, driverId) => {
-      if (set.delete(socketId) && set.size === 0) {
-        this.driverSockets.delete(driverId);
-      }
+      if (set.delete(socketId) && set.size === 0) this.driverSockets.delete(driverId);
     });
     this.memberSockets.forEach((set, memberId) => {
-      if (set.delete(socketId) && set.size === 0) {
-        this.memberSockets.delete(memberId);
-      }
+      if (set.delete(socketId) && set.size === 0) this.memberSockets.delete(memberId);
     });
   }
 
@@ -62,12 +56,10 @@ export class AppSocketGateway
       if (!this.adminSockets.has(data.id)) this.adminSockets.set(data.id, new Set());
       this.adminSockets.get(data.id)?.add(socket.id);
     }
-
     if (data.type === 'DRIVER') {
       if (!this.driverSockets.has(data.id)) this.driverSockets.set(data.id, new Set());
       this.driverSockets.get(data.id)?.add(socket.id);
     }
-
     if (data.type === 'MEMBER') {
       if (!this.memberSockets.has(data.id)) this.memberSockets.set(data.id, new Set());
       this.memberSockets.get(data.id)?.add(socket.id);
@@ -75,6 +67,33 @@ export class AppSocketGateway
 
     return { success: true };
   }
+
+  /** Join a trip-specific room to receive driver location updates for that trip. */
+  @SubscribeMessage('watchTrip')
+  watchTrip(
+    @MessageBody() data: { tripId: string },
+    @ConnectedSocket() socket: Socket,
+  ) {
+    if (!data?.tripId) return;
+    socket.join(`trip:${data.tripId}`);
+    return { success: true };
+  }
+
+  /**
+   * Driver broadcasts their GPS position.
+   * Relayed to everyone watching that trip room + all online admins.
+   */
+  @SubscribeMessage('driver:location')
+  handleDriverLocation(
+    @MessageBody() data: { tripId: string; lat: number; lng: number },
+    @ConnectedSocket() _socket: Socket,
+  ) {
+    if (!data?.tripId) return;
+    this.server.to(`trip:${data.tripId}`).emit('driver:location', data);
+    this.emitToAllAdmins('driver:location', data);
+  }
+
+  // ── Emit helpers ──────────────────────────────────────────
 
   emitToAdmin(adminId: string, event: string, data: any) {
     const sockets = this.adminSockets.get(adminId);

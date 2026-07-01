@@ -25,6 +25,7 @@ enum MemberStatus {
 enum TripStatus {
   REQUESTED
   ACCEPTED
+  ARRIVED_AT_PICKUP
   IN_PROGRESS
   COMPLETED
   CANCELLED
@@ -130,6 +131,8 @@ model Trip {
   cancelledAt            DateTime?
   cancelReason           String?
   reminderSentAt         DateTime?
+  driverCanComplete      Boolean       @default(false)
+  paymentMethod          String        @default("CASH")
   createdAt              DateTime      @default(now())
   updatedAt              DateTime      @updatedAt
 

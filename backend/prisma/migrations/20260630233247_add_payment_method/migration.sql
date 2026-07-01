@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `trip` ADD COLUMN `paymentMethod` VARCHAR(191) NOT NULL DEFAULT 'CASH';

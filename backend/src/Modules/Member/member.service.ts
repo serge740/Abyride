@@ -57,6 +57,41 @@ export class MemberService {
     };
   }
 
+  /**
+   * Used by guest checkout (trip booking): returns the existing Member for this
+   * email, or silently creates one (same onboarding as an admin-created member —
+   * generated password + welcome email). Not exposed via any public REST route.
+   */
+  async findOrCreateGuest(data: { names: string; email: string; phone?: string }) {
+    const existing = await this.prisma.member.findUnique({ where: { email: data.email } });
+    if (existing) return existing;
+
+    const rawPassword = generatePassword();
+    const hashedPassword = await bcrypt.hash(rawPassword, 10);
+
+    const member = await this.prisma.member.create({
+      data: {
+        names: data.names,
+        email: data.email,
+        phone: data.phone ?? null,
+        password: hashedPassword,
+      },
+    });
+
+    try {
+      await this.emailService.sendWelcomeEmail({
+        email: member.email,
+        name: member.names,
+        tempPassword: rawPassword,
+        role: 'member',
+      });
+    } catch (err) {
+      console.error('Failed to send welcome email:', err?.message);
+    }
+
+    return member;
+  }
+
   async findAll() {
     return this.prisma.member.findMany({
       select: {
