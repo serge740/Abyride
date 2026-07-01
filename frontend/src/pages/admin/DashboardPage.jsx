@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Car, Users, CalendarDays, Gauge } from 'lucide-react';
 import driverService from '../../services/driverService';
 import memberService from '../../services/memberService';
+import tripService from '../../services/tripService';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { D, BRK } from '../../components/admin/theme';
 import { Badge, Avatar, StatCard, EmptyState } from '../../components/admin/ui';
@@ -30,15 +31,21 @@ export default function DashboardPage() {
   const { admin } = useAdminAuth();
   const [drivers, setDrivers] = useState([]);
   const [members, setMembers] = useState([]);
+  const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     (async () => {
       try {
-        const [driversData, membersData] = await Promise.all([driverService.getAll(), memberService.getAll()]);
+        const [driversData, membersData, tripsData] = await Promise.all([
+          driverService.getAll(),
+          memberService.getAll(),
+          tripService.getAll(),
+        ]);
         setDrivers(Array.isArray(driversData) ? driversData : []);
         setMembers(Array.isArray(membersData) ? membersData : []);
+        setTrips(Array.isArray(tripsData) ? tripsData : []);
       } catch (err) {
         setError(err.message || 'Failed to load dashboard data');
       } finally {
@@ -80,7 +87,7 @@ export default function DashboardPage() {
         <StatCard label="Total Drivers"  value={drivers.length} sub={`${activeDrivers} currently active`} accentColor="#2546b8" loading={loading} />
         <StatCard label="Active Drivers" value={activeDrivers}  sub={`${drivers.length - activeDrivers} off duty`} accentColor="#0b1f3a" loading={loading} />
         <StatCard label="Total Members"  value={members.length} sub="Registered riders" accentColor="#2546b8" loading={loading} />
-        <StatCard label="Total Bookings" value={0} sub="Booking module coming soon" accentColor="#0b1f3a" loading={loading} />
+        <StatCard label="Total Bookings" value={trips.length} sub={`${trips.filter((t) => t.status === 'REQUESTED').length} awaiting driver`} accentColor="#0b1f3a" loading={loading} />
       </div>
 
       {/* Status mini-strip */}

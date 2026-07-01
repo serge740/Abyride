@@ -58,12 +58,12 @@ export class TripController {
     return this.tripService.assign(id, body.driverId);
   }
 
-  /** Driver marks they have arrived at the pickup location. */
+  /** Driver marks they have arrived at the pickup location. Must be within 100m (enforced for drivers, not admin overrides). */
   @Patch(':id/arrived-pickup')
   @UseGuards(DualAuthGuard)
-  arrivedAtPickup(@Param('id') id: string, @Req() req: RequestWithCaller) {
+  arrivedAtPickup(@Param('id') id: string, @Body() body: { lat?: number; lng?: number }, @Req() req: RequestWithCaller) {
     const driverId = req.admin ? undefined : req.driver?.id;
-    return this.tripService.arrivedAtPickup(id, driverId);
+    return this.tripService.arrivedAtPickup(id, driverId, body?.lat, body?.lng);
   }
 
   /** Driver starts the trip after passenger boards. */

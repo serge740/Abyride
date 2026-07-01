@@ -7,7 +7,7 @@ import { Badge, Avatar, BtnPrimary, EmptyState, TableHead, FilterTabs, SearchBar
 
 const fmtDate = (iso) => iso ? new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
 
-const COL = '1.4fr 1fr 110px 120px 170px';
+const COL = '1.3fr 1fr 130px 110px 120px 170px';
 
 export default function AdminDriversPage() {
   const navigate = useNavigate();
@@ -135,7 +135,7 @@ export default function AdminDriversPage() {
       {/* Table */}
       <div style={{ background: D.ivory, borderRadius: 10, border: `1px solid ${D.rule}`, overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}><div style={{ minWidth: 720 }}>
-          <TableHead cols={['Driver', 'Phone', 'Status', 'Joined', 'Actions']} template={COL} />
+          <TableHead cols={['Driver', 'Phone', 'Fleet', 'Status', 'Joined', 'Actions']} template={COL} />
           {loading ? (
             <div style={{ padding: '40px 0' }}><EmptyState title="Loading drivers…" /></div>
           ) : filtered.length === 0 ? (
@@ -153,6 +153,7 @@ export default function AdminDriversPage() {
                   </div>
                 </div>
                 <div style={{ fontSize: 13, color: D.slate }}>{d.phone || '—'}</div>
+                <div style={{ fontSize: 12.5, color: d.fleet ? D.ink : D.mute, fontStyle: d.fleet ? 'normal' : 'italic' }}>{d.fleet?.name || 'Unassigned'}</div>
                 <div><Badge status={d.status} /></div>
                 <div style={{ fontSize: 12.5, color: D.slate }}>{fmtDate(d.createdAt)}</div>
                 <div style={{ display: 'flex', gap: 6 }} onClick={(e) => e.stopPropagation()}>

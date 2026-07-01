@@ -1,17 +1,152 @@
-﻿import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../../contexts/LanguageContext';
-import { ArrowRight, Circle, Search } from 'lucide-react';
+import { ArrowRight, Circle, MapPin } from 'lucide-react';
+import { useAddressSearch } from '../../../hooks/useAddressSearch';
 
 const SLIDE_MS = 6000;
 
 const IMG = (id, w = 900, h = 720) =>
   `https://images.unsplash.com/photo-${id}?w=${w}&h=${h}&fit=crop&auto=format&q=80`;
 
+/* ── Inline address row for the hero widget ─────────────────── */
+function WidgetAddressRow({ value, latlng, onSelect, onClear, label, dotColor, placeholder, geoLoading }) {
+  const [query, setQuery] = useState(value || '');
+  const [open, setOpen]   = useState(false);
+  const wrapRef           = useRef(null);
+  const { results, loading } = useAddressSearch(open ? query : '');
+
+  useEffect(() => { setQuery(value || ''); }, [value]);
+
+  useEffect(() => {
+    const handle = (e) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('mousedown', handle);
+    return () => document.removeEventListener('mousedown', handle);
+  }, []);
+
+  return (
+    <div ref={wrapRef} style={{ position: 'relative' }}>
+      <div className="flex items-center gap-[14px] px-[14px] py-3 border-t border-rule">
+        <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: dotColor }} />
+        <div className="flex-1 min-w-0">
+          <div className="text-[9px] tracking-[0.14em] text-muted uppercase font-semibold">{label}</div>
+          <input
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setOpen(true);
+              if (latlng) onClear();
+            }}
+            onFocus={() => query.length >= 2 && setOpen(true)}
+            placeholder={geoLoading ? 'Detecting your location…' : placeholder}
+            autoComplete="off"
+            style={{
+              border: 'none', outline: 'none', background: 'transparent',
+              fontSize: 13, color: 'var(--c-ink)', fontFamily: 'inherit',
+              fontWeight: 500, width: '100%', padding: 0, marginTop: 3,
+            }}
+          />
+        </div>
+        {(loading || geoLoading) && (
+          <div style={{ width: 12, height: 12, borderRadius: '50%', border: '2px solid var(--c-rule)', borderTopColor: 'var(--c-muted)', animation: 'addressSpin 0.7s linear infinite', flexShrink: 0 }} />
+        )}
+        {!loading && !geoLoading && latlng && (
+          <div style={{ width: 7, height: 7, borderRadius: '50%', background: '#22c55e', flexShrink: 0 }} />
+        )}
+      </div>
+
+      {open && results.length > 0 && (
+        <div style={{
+          position: 'absolute', top: '100%', left: -14, right: -14, zIndex: 400,
+          backgroundColor: 'var(--c-bg)', border: '1px solid var(--c-rule)',
+          borderRadius: 10, boxShadow: '0 8px 28px rgba(0,0,0,0.18)', overflow: 'hidden',
+        }}>
+          {results.map((r, i) => (
+            <button
+              key={r.id || i}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                setQuery(r.label);
+                setOpen(false);
+                onSelect(r.label, r.latlng);
+              }}
+              style={{
+                width: '100%', display: 'flex', alignItems: 'flex-start', gap: 8,
+                padding: '10px 14px', background: 'none', border: 'none', cursor: 'pointer',
+                textAlign: 'left', borderBottom: i < results.length - 1 ? '1px solid var(--c-rule)' : 'none',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--c-bg-2)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
+            >
+              <MapPin size={13} color="var(--c-muted)" style={{ flexShrink: 0, marginTop: 2 }} />
+              <div style={{ minWidth: 0 }}>
+                <p style={{ margin: 0, fontSize: 12, fontWeight: 600, color: 'var(--c-ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.label}</p>
+                {r.sublabel && <p style={{ margin: '1px 0 0', fontSize: 11, color: 'var(--c-muted)' }}>{r.sublabel}</p>}
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function HeroSection() {
   const { t } = useLanguage();
-  const [idx, setIdx]         = useState(0);
-  const [fade, setFade]       = useState(false); // true = content fading out
-  const timerRef              = useRef(null);
+  const navigate = useNavigate();
+
+  const [idx, setIdx]   = useState(0);
+  const [fade, setFade] = useState(false);
+  const timerRef        = useRef(null);
+
+  // Widget state
+  const [mode,           setMode]          = useState('now');
+  const [hPickup,        setHPickup]       = useState('');
+  const [hDropoff,       setHDropoff]      = useState('');
+  const [hPickupLatLng,  setHPickupLatlng] = useState(null);
+  const [hDropoffLatLng, setHDropoffLatlng]= useState(null);
+  const [geoLoading,     setGeoLoading]    = useState(false);
+
+  // Auto-detect pickup on mount
+  useEffect(() => {
+    if (!navigator.geolocation) return;
+    setGeoLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const { latitude: lat, longitude: lng } = pos.coords;
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+            { headers: { 'Accept-Language': 'en' } }
+          );
+          const data = await res.json();
+          const addr = data.address || {};
+          const parts = [
+            addr.road || addr.pedestrian || addr.footway,
+            addr.neighbourhood || addr.suburb,
+            addr.city || addr.town || addr.village,
+          ].filter(Boolean);
+          setHPickup(parts.join(', ') || data.display_name || 'Current location');
+          setHPickupLatlng([lat, lng]);
+        } catch {}
+        setGeoLoading(false);
+      },
+      () => setGeoLoading(false),
+      { timeout: 8000, maximumAge: 60000 }
+    );
+  }, []);
+
+  const handleBook = () => {
+    const params = new URLSearchParams();
+    if (hPickup)        params.set('pu',   hPickup);
+    if (hDropoff)       params.set('do',   hDropoff);
+    if (hPickupLatLng)  { params.set('plat', hPickupLatLng[0]);  params.set('plng', hPickupLatLng[1]); }
+    if (hDropoffLatLng) { params.set('dlat', hDropoffLatLng[0]); params.set('dlng', hDropoffLatLng[1]); }
+    if (hPickupLatLng && hDropoffLatLng) params.set('step', '2');
+    navigate(`${mode === 'schedule' ? '/schedule' : '/book'}?${params.toString()}`);
+  };
 
   const SLIDES = [
     {
@@ -39,20 +174,14 @@ export default function HeroSection() {
 
   const advance = (next) => {
     setFade(true);
-    setTimeout(() => {
-      setIdx(next);
-      setFade(false);
-    }, 380);
+    setTimeout(() => { setIdx(next); setFade(false); }, 380);
   };
 
-  const startTimer = (from = idx) => {
+  const startTimer = () => {
     clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
       setFade(true);
-      setTimeout(() => {
-        setIdx(prev => (prev + 1) % SLIDES.length);
-        setFade(false);
-      }, 380);
+      setTimeout(() => { setIdx(prev => (prev + 1) % SLIDES.length); setFade(false); }, 380);
     }, SLIDE_MS);
   };
 
@@ -65,10 +194,11 @@ export default function HeroSection() {
   const goTo = (i) => {
     if (i === idx) return;
     advance(i);
-    startTimer(i);
+    startTimer();
   };
 
   const slide = SLIDES[idx];
+  const canBook = Boolean(hPickup || hDropoff);
 
   return (
     <section className="bg-surface text-ink transition-colors duration-300">
@@ -76,8 +206,6 @@ export default function HeroSection() {
 
         {/* ── Left column ─────────────────────────────────────── */}
         <div className="pt-2 lg:pt-6">
-
-          {/* Fading content block */}
           <div
             className="transition-opacity duration-[380ms] ease-in-out"
             style={{ opacity: fade ? 0 : 1 }}
@@ -96,7 +224,6 @@ export default function HeroSection() {
             </p>
           </div>
 
-          {/* CTAs — always visible */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 mt-8 lg:mt-10">
             <a
               className="bg-ink text-surface px-[22px] sm:px-[26px] py-3.5 lg:py-4 rounded-[8px] text-[14px] lg:text-[15px] font-semibold inline-flex items-center gap-2"
@@ -109,7 +236,6 @@ export default function HeroSection() {
             </a>
           </div>
 
-          {/* Stats */}
           <div className="flex gap-6 sm:gap-10 mt-10 lg:mt-16 pt-6 lg:pt-8 border-t border-rule flex-wrap">
             <div>
               <div className="text-[28px] sm:text-[36px] leading-none font-bold tracking-[-0.03em]">
@@ -135,7 +261,6 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Slide dots */}
           <div className="flex items-center gap-[10px] mt-8 lg:mt-10">
             {SLIDES.map((_, i) => (
               <button
@@ -149,14 +274,11 @@ export default function HeroSection() {
                   }`}
               />
             ))}
-            {/* Progress bar */}
             <div className="flex-1 h-px bg-rule ml-2 relative overflow-hidden">
               <div
                 key={idx}
                 className="absolute inset-y-0 left-0 bg-accent"
-                style={{
-                  animation: `progressBar ${SLIDE_MS}ms linear forwards`,
-                }}
+                style={{ animation: `progressBar ${SLIDE_MS}ms linear forwards` }}
               />
             </div>
           </div>
@@ -165,7 +287,7 @@ export default function HeroSection() {
         {/* ── Right column ─────────────────────────────────────── */}
         <div className="relative">
 
-          {/* Image stack with cross-fade */}
+          {/* Image stack */}
           <div className="relative w-full h-[280px] sm:h-[420px] lg:h-[720px] rounded-[8px] overflow-hidden bg-navy">
             {SLIDES.map((s, i) => (
               <img
@@ -188,46 +310,71 @@ export default function HeroSection() {
             </div>
           </div>
 
-          {/* Booking widget */}
+          {/* ── Booking widget ─────────────────────────────────── */}
           <div className="lg:absolute lg:-bottom-14 lg:-left-14 w-full lg:w-[460px] bg-surface border border-rule p-4 sm:p-[22px] shadow-[0_30px_60px_-20px_rgba(11,31,58,0.35)] rounded-[12px] mt-4 lg:mt-0">
+
+            {/* Header row */}
             <div className="flex justify-between items-center mb-4 gap-3">
               <div className="text-[16px] sm:text-[18px] leading-[1.1] tracking-[-0.02em] font-bold italic">
                 {t('widget.title')}
               </div>
               <div className="flex text-[10px] tracking-[0.1em] uppercase font-semibold flex-shrink-0">
-                <span className="px-[9px] py-[5px] text-ink bg-surface-2 rounded-[4px]">{t('widget.now')}</span>
-                <span className="px-[9px] py-[5px] text-muted rounded-[4px] cursor-pointer">{t('widget.schedule')}</span>
-                <span className="hidden sm:inline px-[9px] py-[5px] text-muted rounded-[4px] cursor-pointer">{t('widget.recurring')}</span>
+                <button
+                  onClick={() => setMode('now')}
+                  className={`px-[9px] py-[5px] rounded-[4px] transition-colors ${mode === 'now' ? 'text-ink bg-surface-2' : 'text-muted'}`}
+                >
+                  {t('widget.now')}
+                </button>
+                <button
+                  onClick={() => setMode('schedule')}
+                  className={`px-[9px] py-[5px] rounded-[4px] transition-colors ${mode === 'schedule' ? 'text-ink bg-surface-2' : 'text-muted'}`}
+                >
+                  {t('widget.schedule')}
+                </button>
+                <span className="hidden sm:inline px-[9px] py-[5px] text-muted rounded-[4px] cursor-not-allowed opacity-50">
+                  {t('widget.recurring')}
+                </span>
               </div>
             </div>
-            <div className="flex items-center gap-[14px] px-[14px] py-3 border-t border-rule">
-              <span className="w-2 h-2 rounded-full bg-ink flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="text-[9px] tracking-[0.14em] text-muted uppercase font-semibold">{t('widget.pickup')}</div>
-                <div className="text-[13px] sm:text-[14px] text-ink mt-[3px] font-medium truncate">
-                  Cass Tech HS, 2501 Second Ave, Detroit
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-[14px] px-[14px] py-3 border-t border-rule">
-              <span className="w-2 h-2 rounded-full bg-accent flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="text-[9px] tracking-[0.14em] text-muted uppercase font-semibold">{t('widget.dropoff')}</div>
-                <div className="text-[13px] sm:text-[14px] text-ink mt-[3px] font-medium truncate">
-                  Henry Ford Hospital · 2799 W Grand Blvd
-                </div>
-              </div>
-              <div className="text-[10px] text-accent tracking-[0.06em] font-semibold flex-shrink-0">
-                {t('widget.add_stop')}
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-[6px] pt-[14px] border-t border-rule">
-              <span className="text-[12px] px-3 py-[7px] border border-rule text-ink-soft font-medium rounded-[4px] cursor-pointer">{t('widget.standard')}</span>
-              <span className="text-[12px] px-3 py-[7px] bg-ink text-surface border border-ink font-medium rounded-[4px] cursor-pointer">{t('widget.medical_badge')}</span>
-              <span className="text-[12px] px-3 py-[7px] border border-rule text-ink-soft font-medium rounded-[4px] cursor-pointer">{t('widget.accessible')}</span>
-            </div>
-            <button className="w-full mt-[14px] bg-accent text-white border-0 px-4 py-[14px] text-[14px] font-semibold flex justify-between items-center rounded-[8px]">
-              {t('widget.see_drivers')} <ArrowRight size={14} />
+
+            {/* Pickup row */}
+            <WidgetAddressRow
+              value={hPickup}
+              latlng={hPickupLatLng}
+              label={t('widget.pickup')}
+              dotColor="var(--c-ink)"
+              placeholder="Current location or address"
+              geoLoading={geoLoading}
+              onSelect={(label, latlng) => { setHPickup(label); setHPickupLatlng(latlng); }}
+              onClear={() => { setHPickup(''); setHPickupLatlng(null); }}
+            />
+
+            {/* Dropoff row */}
+            <WidgetAddressRow
+              value={hDropoff}
+              latlng={hDropoffLatLng}
+              label={t('widget.dropoff')}
+              dotColor="var(--c-accent, #2546b8)"
+              placeholder="Where are you going?"
+              geoLoading={false}
+              onSelect={(label, latlng) => { setHDropoff(label); setHDropoffLatlng(latlng); }}
+              onClear={() => { setHDropoff(''); setHDropoffLatlng(null); }}
+            />
+
+            {/* CTA button */}
+            <button
+              onClick={handleBook}
+              disabled={!canBook}
+              className="w-full mt-3.5 border-0 px-4 py-3.5 text-[14px] font-semibold flex justify-between items-center rounded-lg transition-opacity"
+              style={{
+                backgroundColor: canBook ? 'var(--c-accent, #2546b8)' : 'var(--c-bg-3)',
+                color: canBook ? '#fff' : 'var(--c-muted)',
+                cursor: canBook ? 'pointer' : 'not-allowed',
+                opacity: 1,
+              }}
+            >
+              {mode === 'schedule' ? 'Schedule a ride' : t('widget.see_drivers')}
+              <ArrowRight size={14} />
             </button>
           </div>
         </div>
@@ -235,7 +382,6 @@ export default function HeroSection() {
 
       <div className="hidden lg:block h-20" />
 
-      {/* Progress bar keyframes */}
       <style>{`
         @keyframes progressBar {
           from { width: 0%; }

@@ -33,8 +33,9 @@ export const STATUS_CFG = {
   SUSPENDED:   { label: 'Suspended',   bg: '#fee2e2',               color: '#991b1b' },
   INACTIVE:    { label: 'Inactive',    bg: '#fee2e2',               color: '#991b1b' },
   REQUESTED:   { label: 'Requested',   bg: '#fffbeb',               color: '#92400e', border: '1px solid #fde68a' },
-  ACCEPTED:    { label: 'Accepted',    bg: 'rgba(37,70,184,0.11)',  color: '#2546b8' },
-  IN_PROGRESS: { label: 'En Route',    bg: '#fff7ed',               color: '#c2410c', border: '1px solid #fed7aa' },
+  ACCEPTED:         { label: 'Accepted',      bg: 'rgba(37,70,184,0.11)',  color: '#2546b8' },
+  ARRIVED_AT_PICKUP:{ label: 'At Pickup',    bg: 'rgba(5,150,105,0.1)',   color: '#065f46', border: '1px solid rgba(5,150,105,0.25)' },
+  IN_PROGRESS:      { label: 'En Route',     bg: '#fff7ed',               color: '#c2410c', border: '1px solid #fed7aa' },
   COMPLETED:   { label: 'Completed',   bg: '#0b1f3a',               color: '#fff' },
   CANCELLED:   { label: 'Cancelled',   bg: '#fee2e2',               color: '#991b1b' },
 };

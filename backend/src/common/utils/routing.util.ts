@@ -8,6 +8,18 @@ export interface RouteResult {
 
 const OSRM_BASE_URL = 'https://router.project-osrm.org/route/v1/driving';
 
+/** Straight-line distance in km between two [lat, lng] points. */
+export function haversineKm([lat1, lng1]: [number, number], [lat2, lng2]: [number, number]): number {
+  const R = 6371;
+  const toRad = (x: number) => (x * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
 /**
  * Calls the public OSRM demo server for a driving route between two points.
  * OSRM expects coordinates as lng,lat (the opposite of Leaflet/Nominatim's lat,lng) —

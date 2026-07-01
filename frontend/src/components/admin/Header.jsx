@@ -17,6 +17,15 @@ function getPageMeta(pathname) {
   if (/^\/admin\/dashboard\/bookings\/?$/.test(pathname)) {
     return { title: 'Booking Management', crumbs: [{ label: 'Dashboard', to: '/admin/dashboard' }, { label: 'Bookings' }] };
   }
+  if (/^\/admin\/dashboard\/fleets\/create\/?$/.test(pathname)) {
+    return { title: 'Add New Fleet', crumbs: [{ label: 'Dashboard', to: '/admin/dashboard' }, { label: 'Fleets', to: '/admin/dashboard/fleets' }, { label: 'New Fleet' }] };
+  }
+  if (/^\/admin\/dashboard\/fleets\/[^/]+\/edit\/?$/.test(pathname)) {
+    return { title: 'Edit Fleet', crumbs: [{ label: 'Dashboard', to: '/admin/dashboard' }, { label: 'Fleets', to: '/admin/dashboard/fleets' }, { label: 'Edit' }] };
+  }
+  if (/^\/admin\/dashboard\/fleets\/?$/.test(pathname)) {
+    return { title: 'Fleet Management', crumbs: [{ label: 'Dashboard', to: '/admin/dashboard' }, { label: 'Fleets' }] };
+  }
   return { title: 'Overview', crumbs: [{ label: 'Dashboard' }] };
 }
 

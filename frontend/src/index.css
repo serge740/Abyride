@@ -180,3 +180,5 @@
   color: var(--c-ink-soft);
   margin: 1.8rem 0;
 }
+
+@keyframes addressSpin { to { transform: rotate(360deg); } }

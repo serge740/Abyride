@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FileText, Image as ImageIcon, ExternalLink } from 'lucide-react';
 import driverService from '../../services/driverService';
+import fleetService from '../../services/fleetService';
 import { D, BRK } from '../../components/admin/theme';
-import { Badge, BtnGhost, BtnDanger, BtnPrimary, SectionTitle, EmptyState } from '../../components/admin/ui';
+import { Badge, BtnGhost, BtnDanger, BtnPrimary, SectionTitle, EmptyState, Field } from '../../components/admin/ui';
 
 const fmtDate = (iso) => iso ? new Date(iso).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—';
 
@@ -43,13 +44,35 @@ export default function DriverViewPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [fleets, setFleets] = useState([]);
+  const [fleetId, setFleetId] = useState('');
+  const [savingFleet, setSavingFleet] = useState(false);
+  const [fleetSaved, setFleetSaved] = useState(false);
 
   useEffect(() => {
     driverService.getOne(id)
-      .then(setDriver)
+      .then((d) => { setDriver(d); setFleetId(d.fleetId || ''); })
       .catch((err) => setError(err.response?.data?.message || err.message || 'Failed to load driver'))
       .finally(() => setLoading(false));
+    fleetService.getAll().then(setFleets).catch(() => {});
   }, [id]);
+
+  const saveFleet = async () => {
+    setSavingFleet(true);
+    setFleetSaved(false);
+    try {
+      const fd = new FormData();
+      fd.append('fleetId', fleetId);
+      const updated = await driverService.update(id, fd);
+      setDriver((p) => ({ ...p, fleetId: updated.fleetId, fleet: fleets.find((f) => f.id === updated.fleetId) || null }));
+      setFleetSaved(true);
+      setTimeout(() => setFleetSaved(false), 3000);
+    } catch (err) {
+      setError(err.response?.data?.message || err.message);
+    } finally {
+      setSavingFleet(false);
+    }
+  };
 
   const toggleStatus = async () => {
     setBusy(true);
@@ -113,6 +136,11 @@ export default function DriverViewPage() {
             <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
               <Badge status={driver.status} />
               <span style={{ fontSize: 13, color: BRK.mute }}>{driver.email}</span>
+              {driver.fleet && (
+                <span style={{ fontSize: 11, fontWeight: 600, color: BRK.accent, background: 'rgba(124,155,255,0.15)', padding: '3px 9px', borderRadius: 999 }}>
+                  {driver.fleet.name}
+                </span>
+              )}
             </div>
           </div>
           <div style={{ display: 'flex', gap: 32, textAlign: 'center', position: 'relative', paddingLeft: 28, borderLeft: `1px solid ${BRK.line}` }}>
@@ -149,6 +177,27 @@ export default function DriverViewPage() {
           <DocLink label="Vehicle Image"       url={driver.vehicleImage}      kind="image" />
           <DocLink label="License Document"    url={driver.licenseDocument}   kind="doc" />
           <DocLink label="Insurance Document"  url={driver.insuranceDocument} kind="doc" />
+        </div>
+      </div>
+
+      {/* Fleet assignment */}
+      <div style={{ background: D.ivory, borderRadius: 10, border: `1px solid ${D.rule}`, padding: '22px 24px', marginBottom: 24 }}>
+        <SectionTitle>Fleet Assignment</SectionTitle>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
+          <div style={{ flex: 1, minWidth: 240 }}>
+            <Field
+              label="Vehicle Category"
+              type="select"
+              value={fleetId}
+              onChange={setFleetId}
+              options={fleets.map((f) => ({ value: f.id, label: `${f.name} — $${Number(f.perKmRate).toFixed(2)}/km` }))}
+              helpText="Determines which trip requests this driver can be assigned to."
+            />
+          </div>
+          <BtnPrimary onClick={saveFleet} disabled={savingFleet || fleetId === (driver.fleetId || '')}>
+            {savingFleet ? 'Saving…' : 'Save'}
+          </BtnPrimary>
+          {fleetSaved && <span style={{ fontSize: 12, color: D.cobaltHi, fontWeight: 600 }}>✓ Updated</span>}
         </div>
       </div>
 

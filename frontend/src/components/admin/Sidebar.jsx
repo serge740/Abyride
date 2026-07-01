@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutGrid, Car, CalendarDays, X } from 'lucide-react';
+import { LayoutGrid, Car, Truck, CalendarDays, X } from 'lucide-react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import driverService from '../../services/driverService';
 import logo from '../../assets/images/abyride_logo.png';
@@ -9,6 +9,7 @@ import { BRK } from './theme';
 const NAV = [
   { id: 'overview', label: 'Overview',           icon: LayoutGrid,   path: '/admin/dashboard',         end: true  },
   { id: 'drivers',  label: 'Driver Management',  icon: Car,          path: '/admin/dashboard/drivers', end: false },
+  { id: 'fleets',   label: 'Fleet Management',    icon: Truck,        path: '/admin/dashboard/fleets',  end: false },
   { id: 'bookings', label: 'Booking Management', icon: CalendarDays, path: '/admin/dashboard/bookings',end: false },
 ];
 

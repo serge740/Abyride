@@ -3,7 +3,9 @@ import { PrismaService } from '../../Prisma/prisma.service';
 import { EmailService } from '../../Global/email/email.service';
 import { AppSocketGateway } from '../../Global/socket/socket.gateway';
 import { MemberService } from '../Member/member.service';
-import { getRoute } from '../../common/utils/routing.util';
+import { getRoute, haversineKm } from '../../common/utils/routing.util';
+
+const ARRIVAL_RADIUS_KM = 0.1; // 100m
 import { FleetStatus, TripStatus, DriverStatus, PaymentStatus } from '@prisma/client';
 
 const TRIP_INCLUDE = {
@@ -155,7 +157,7 @@ export class TripService {
     return updated;
   }
 
-  async arrivedAtPickup(tripId: string, callerId?: string) {
+  async arrivedAtPickup(tripId: string, callerId?: string, lat?: number, lng?: number) {
     const trip = await this.prisma.trip.findUnique({ where: { id: tripId } });
     if (!trip) throw new NotFoundException('Trip not found');
     if (trip.status !== TripStatus.ACCEPTED) {
@@ -163,6 +165,20 @@ export class TripService {
     }
     if (callerId && trip.driverId !== callerId) {
       throw new BadRequestException('You are not assigned to this trip');
+    }
+
+    // Drivers must be physically near the pickup point to self-report arrival.
+    // Admin overrides (no callerId) skip this check.
+    if (callerId) {
+      if (lat === undefined || lat === null || lng === undefined || lng === null) {
+        throw new BadRequestException('Current location is required to mark arrival');
+      }
+      const distanceKm = haversineKm([Number(lat), Number(lng)], [trip.pickupLat, trip.pickupLng]);
+      if (distanceKm > ARRIVAL_RADIUS_KM) {
+        throw new BadRequestException(
+          `You must be within 100m of the pickup location to mark arrival (currently ${Math.round(distanceKm * 1000)}m away)`,
+        );
+      }
     }
 
     const updated = await this.prisma.trip.update({
